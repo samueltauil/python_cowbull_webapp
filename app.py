@@ -16,7 +16,7 @@ def test():
     print()
     print("In Test")
     print()
-    return render_template('hello.html')
+    return render_template('hello2u.html')
 
 if __name__ == "__main__":
     app.run\
