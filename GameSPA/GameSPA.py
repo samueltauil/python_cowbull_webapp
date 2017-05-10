@@ -1,4 +1,6 @@
 import json
+import requests
+from initialization_package import app
 from flask import render_template, request
 from flask.views import MethodView
 from python_cowbull_game.GameObject import GameObject
@@ -6,23 +8,24 @@ from python_cowbull_game.GameObject import GameObject
 
 class GameSPA(MethodView):
     def get(self):
-        digits = GameObject.digits_used
-        guesses = GameObject.guesses_allowed
-        game_modes = [mode for mode in GameObject.digits_used]
-        game_modes_str = str(game_modes).replace('[','').replace(']','').replace("'",'')
+        cowbull_url = "{}/modes".format(app.config.get('cowbull_url', None))
+        if cowbull_url is None:
+            raise ValueError("CowBull URL is Null!")
 
-        table = []
-        for mode in game_modes:
-            table.append({
-                "mode": mode,
-                "digits": digits[mode],
-                "guesses": guesses[mode]
-            })
+        table = None
+        r = requests.get(url=cowbull_url)
+
+        if r.status_code != 200:
+            table = [{"mode": "Game is unavailable", "digits": "n/a", "guesses": "n/a"}]
+        else:
+            table = r.json()
+
+        game_modes = str([mode["mode"] for mode in table]).replace('[','').replace(']','').replace("'","")
 
         return render_template(
             "index.html",
-            digits=digits,
-            guesses=guesses,
-            game_modes=game_modes_str,
+            digits=0,
+            guesses=0,
+            game_modes=game_modes,
             modes_table=table
         )
