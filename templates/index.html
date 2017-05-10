@@ -9,4 +9,22 @@
     of digits (numbers from 0 to 9). The modes for the game are: <strong><em>{{ game_modes }}</em></strong>.
     Each mode has the following characteristics:
 </p>
+<table>
+    <thead>
+        <tr>
+            <th>Mode</th>
+            <th>Digits Required</th>
+            <th>Guesses Allowed</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for mode, digits, guesses in modes_table %}
+            <tr>
+                <td>{{mode}}</td>
+                <td>{{digits}}</td>
+                <td>{{guesses}}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}
