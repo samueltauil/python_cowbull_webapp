@@ -5,4 +5,4 @@ from flask.views import MethodView
 
 class GameSPA(MethodView):
     def get(self):
-        return render_template("hello.html")
+        return render_template("index.html")
