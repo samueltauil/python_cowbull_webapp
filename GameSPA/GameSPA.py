@@ -11,4 +11,4 @@ class GameSPA(MethodView):
         game_modes = str([mode for mode in GameObject.digits_used])\
             .replace('[','').replace(']','').replace("'",'')
 
-        return render_template("index.html", digits, guesses, game_modes)
+        return render_template("index.html", digits=digits, guesses=guesses, game_modes=game_modes)
