@@ -18,11 +18,11 @@
         </tr>
     </thead>
     <tbody>
-        {% for mode, digits, guesses in modes_table %}
+        {% for mode in modes_table %}
             <tr>
-                <td>{{mode}}</td>
-                <td>{{digits}}</td>
-                <td>{{guesses}}</td>
+                <td>{{mode.mode}}</td>
+                <td>{{mode.digits}}</td>
+                <td>{{mode.guesses}}</td>
             </tr>
         {% endfor %}
     </tbody>
