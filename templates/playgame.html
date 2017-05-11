@@ -1,14 +1,91 @@
 {% extends "base_template.html" %}
 {% block title %}CowBull SPA{% endblock %}
 {% block header %}
+<script type="text/javascript">
+    g_digits = {{digits}}
+    g_guesses = {{guesses}}
+    g_key = "{{key}}"
+
+    function validateDigit(digit) {
+        var status = document.getElementById("play_status");
+        var x = digit.value;
+        if (isNaN(x) || x == '' || x < 0 || x > 9) {
+            digit.style.backgroundColor = "red";
+            status.innerHTML = "You must enter a digit between 0 and 9"
+            digit.focus();
+            /* alert("Number must be a digit between 0 and 9"); */
+            return false;
+        } else {
+            status.innerHTML = "You have " + g_guesses + " guesses remaining. Please make your first guess."
+            digit.style.backgroundColor = "transparent";
+            return true;
+        }
+    }
+</script>
 <h1>CowBull SPA</h1>
 {% endblock %}
 {% block body %}
 <p>
-    Welcome to the CowBull SPA Game. The objective of the game is to guess a sequence
-    of digits (numbers from 0 to 9). The modes for the game are: <strong><em>{{ game_modes }}</em></strong>.
-    Each mode has the following characteristics:
+    Okay, <strong><em>Game On!</em></strong> Get ready to guess {{digits}} digits.
+    Remember, digits are integer (whole) numbers between 0 and 9. Today, you were
+    served by {{served_by}} and your unique game key is {{key}}
 </p>
+<p>
+    <span id="play_status">
+        You have {{guesses}} guesses remaining. Please make your first guess.
+    </span>
+</p>
+<hr>
+<form>
+    &nbsp;
+    {% for i in range(digits) %}
+        <input id="digit_{{i}}"
+               required="required"
+               name="digit_{{i}}_name"
+               width="2"
+               type="number"
+               min="0"
+               max="9"
+               onblur="validateDigit(this);"
+        > &nbsp;
+    {% endfor %}
+    <script type="text/javascript">
+        for (i = 0; i < g_guesses; i++) {
+            var digit = document.getElementById('digit_'+i);
+/*            digit.addEventListener("blur", validateDigit); */
+        }
+    </script>
+    <input type="button"
+           class="primary-btn"
+           value="Make a guess"
+           onclick="alert('Key is stored in JavaScript: ' + g_key);"
+    >
+</form>
+<hr>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Try</th>
+            {% for i in range(digits) %}
+                {% set header = i + 1 %}
+                <th>Digit {{header}}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in range(guesses) %}
+            {% set row = i + 1 %}
+            <tr>
+                <td>{{row}}</td>
+                {% for j in range(digits) %}
+                    <td>
+                        <span id="row_{{i}}_col_{{j}}">&nbsp;&nbsp;</span>
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
 <ul>
     {% for mode in modes_table %}
     <li><strong>{{mode.mode}}: </strong> {{mode.digits}} digits with {{mode.guesses}} guesses</li>
@@ -17,7 +94,7 @@
 <hr>
 <p>Chose a game to play:</p>
 <p>
-    <form method="post">
+    <form action="#" method="post">
         {% for mode in modes_table %}
             <input class="btn-primary" type="submit" name="mode" value="{{mode.mode}}"/>
         {% endfor %}

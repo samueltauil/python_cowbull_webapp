@@ -51,4 +51,51 @@ class GameSPA(MethodView):
         return return_template
 
     def post(self):
-        pass
+        print("Mode is {}".format(request.form.get("mode")))
+        mode = request.form.get("mode", "normal")
+        game_modes = []
+        table = None
+        error_message = ""
+        return_template = None
+        r = None
+
+        cowbull_url = "{}/game?mode={}"\
+            .format(
+                app.config.get('cowbull_url', None),
+                mode
+            )
+        if cowbull_url is None:
+            raise ValueError("CowBull URL is Null!")
+
+        try:
+            r = requests.get(url=cowbull_url)
+        except exceptions.ConnectionError as re:
+            error_message = "Game is unavailable: {}.".format(str(re))
+
+        if r is not None:
+            if r.status_code != 200:
+                return_template = render_template(
+                    "error.html",
+                    error_message="For some reason, it hasn't been possible "
+                                  "to get a game. The status code was: {}"
+                    .format(r.status_code)
+                )
+            else:
+                game_object = r.json()
+                print("{}".format(game_object))
+                return_template = render_template(
+                    "playgame.html",
+                    digits=game_object.get("digits", None),
+                    guesses=game_object.get("guesses", None),
+                    key=game_object.get("key", None),
+                    served_by=game_object.get("served-by", "None")
+                )
+        else:
+            return_template = render_template(
+                "error.html",
+                error_message="For some reason, it hasn't been possible "
+                              "to get a game. The status code was: {}"
+                    .format(r.status_code)
+            )
+
+        return return_template
