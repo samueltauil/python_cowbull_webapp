@@ -3,13 +3,14 @@
 {% block header %}
 <script type="text/javascript">
     /* Define globals */
-    g_digits = {{digits}}
-    g_guesses = {{guesses}}
-    g_try = 0
-    g_key = "{{key}}"
+    g_digits = {{digits}};
+    g_guesses = {{guesses}};
+    g_try = 0;
+    g_key = "{{key}}";
+    g_cowbull_url = "{{game_url}}";
 </script>
 <script src="{{ url_for('static', filename='js/validateDigit.js') }}?v=0.2"></script>
-<script src="{{ url_for('static', filename='js/makeGuess.js') }}?v=0.3.87"></script>
+<script src="{{ url_for('static', filename='js/makeGuess.js') }}?v=0.3.94"></script>
 <h1>CowBull SPA</h1>
 {% endblock %}
 {% block body %}
@@ -77,13 +78,8 @@
         {% endfor %}
     </tbody>
 </table>
-<ul>
-    {% for mode in modes_table %}
-    <li><strong>{{mode.mode}}: </strong> {{mode.digits}} digits with {{mode.guesses}} guesses</li>
-    {% endfor %}
-</ul>
 <hr>
-<p>Chose a game to play:</p>
+<p>Start a new game: </p>
 <p>
     <form action="#" method="post">
         {% for mode in modes_table %}

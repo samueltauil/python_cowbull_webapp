@@ -11,6 +11,8 @@ from GameSPA.GameSPA import GameSPA
 # Google App Environment configuration
 cowbull_server = os.getenv("COWBULL_SERVER", "http://cowbull-test-project.appspot.com")
 cowbull_port = os.getenv("COWBULL_PORT", 80)
+print("Connecting to {} on {}".format(cowbull_server, cowbull_port))
+
 app.config["cowbull_server"] = cowbull_server
 app.config["cowbull_port"] = cowbull_port
 

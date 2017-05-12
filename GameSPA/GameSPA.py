@@ -7,10 +7,7 @@ from flask.views import MethodView
 
 class GameSPA(MethodView):
     def get(self):
-        game_modes = []
-        table = None
         error_message = ""
-        return_template = None
         r = None
 
         cowbull_url = "{}/modes".format(app.config.get('cowbull_url', None))
@@ -30,6 +27,7 @@ class GameSPA(MethodView):
                 }]
             else:
                 table = r.json()
+                app.config["mode_table"] = table
 
             game_modes = str([mode["mode"] for mode in table]).replace('[','').replace(']','').replace("'","")
 
@@ -38,7 +36,8 @@ class GameSPA(MethodView):
                 digits=0,
                 guesses=0,
                 game_modes=game_modes,
-                modes_table=table
+                modes_table=table,
+                game_url="{}/game".format(app.config.get("cowbull_url", ""))
             )
         else:
             return_template = render_template(
@@ -84,7 +83,9 @@ class GameSPA(MethodView):
                     digits=game_object.get("digits", None),
                     guesses=game_object.get("guesses", None),
                     key=game_object.get("key", None),
-                    served_by=game_object.get("served-by", "None")
+                    served_by=game_object.get("served-by", "None"),
+                    modes_table=app.config.get("mode_table", []),
+                    game_url="{}/game".format(app.config.get("cowbull_url", ""))
                 )
         else:
             return_template = render_template(

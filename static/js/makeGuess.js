@@ -49,11 +49,14 @@ function parseResponse(text) {
 }
 
 function makeGuess() {
+    var play_status = document.getElementById("play_status");
+    play_status.innerHTML = "Connecting to game @ " + g_cowbull_url;
+
     /* Build digits */
     list_of_guesses = [];
     for (var dig = 0; dig < g_digits; dig++) {
         digit = document.getElementById('digit_'+dig);
-        list_of_guesses.push(digit.value);
+        list_of_guesses.push(parseInt(digit.value));
     }
     params = {
         key: g_key,
@@ -77,7 +80,7 @@ function makeGuess() {
         }
     };
 
-    xhttp.open("POST", "http://localhost:8000/v0_1/game", true)
+    xhttp.open("POST", g_cowbull_url, true)
     xhttp.setRequestHeader("Content-Type", "application/json")
     xhttp.send(JSON.stringify(params), "json")
 }
