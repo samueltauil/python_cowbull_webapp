@@ -1,3 +1,4 @@
+import os
 from flask import render_template
 from initialization_package import app
 from GameSPA.GameSPA import GameSPA
@@ -8,8 +9,10 @@ from GameSPA.GameSPA import GameSPA
 # cowbull_port   --> 80                     !! Note integer
 
 # Google App Environment configuration
-app.config["cowbull_server"] = "http://cowbull-test-project.appspot.com"
-app.config["cowbull_port"] = 80
+cowbull_server = os.getenv("cowbull_server", "http://cowbull-test-project.appspot.com")
+cowbull_port = os.getenv("cowbull_port", 80)
+app.config["cowbull_server"] = cowbull_server
+app.config["cowbull_port"] = cowbull_port
 
 # Localhost configuration
 #app.config["cowbull_server"] = "http://localhost"
