@@ -1,10 +1,8 @@
-import json
 import requests
 from requests import exceptions
 from initialization_package import app
 from flask import render_template, request
 from flask.views import MethodView
-from python_cowbull_game.GameObject import GameObject
 
 
 class GameSPA(MethodView):
