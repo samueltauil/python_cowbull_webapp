@@ -2,26 +2,14 @@
 {% block title %}CowBull SPA{% endblock %}
 {% block header %}
 <script type="text/javascript">
+    /* Define globals */
     g_digits = {{digits}}
     g_guesses = {{guesses}}
+    g_try = 0
     g_key = "{{key}}"
-
-    function validateDigit(digit) {
-        var status = document.getElementById("play_status");
-        var x = digit.value;
-        if (isNaN(x) || x == '' || x < 0 || x > 9) {
-            digit.style.backgroundColor = "red";
-            status.innerHTML = "You must enter a digit between 0 and 9"
-            digit.focus();
-            /* alert("Number must be a digit between 0 and 9"); */
-            return false;
-        } else {
-            status.innerHTML = "You have " + g_guesses + " guesses remaining. Please make your first guess."
-            digit.style.backgroundColor = "transparent";
-            return true;
-        }
-    }
 </script>
+<script src="{{ url_for('static', filename='js/validateDigit.js') }}?v=0.2"></script>
+<script src="{{ url_for('static', filename='js/makeGuess.js') }}?v=0.3.87"></script>
 <h1>CowBull SPA</h1>
 {% endblock %}
 {% block body %}
@@ -44,6 +32,7 @@
                name="digit_{{i}}_name"
                width="2"
                type="number"
+               value="{{i}}"
                min="0"
                max="9"
                onblur="validateDigit(this);"
@@ -58,8 +47,10 @@
     <input type="button"
            class="primary-btn"
            value="Make a guess"
-           onclick="alert('Key is stored in JavaScript: ' + g_key);"
+           onclick="makeGuess();"
     >
+    &nbsp;
+    <span id="error_status"></span>
 </form>
 <hr>
 <table class="table">

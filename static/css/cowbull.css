@@ -7,5 +7,30 @@ p {
 }
 
 li {
-  font-size: large
+  font-size: large;
+}
+
+span {
+    font-size: large;
+}
+
+.nothing {
+    padding: 2px;
+    background-color: white;
+}
+
+.bull {
+    padding: 2px;
+    background-color: darkgreen;
+    color: white;
+}
+
+.cow {
+    padding: 2px;
+    background-color: yellow;
+}
+
+.multiple {
+    padding: 2px;
+    border: 2px solid red;
 }

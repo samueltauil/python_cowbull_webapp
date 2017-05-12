@@ -51,7 +51,6 @@ class GameSPA(MethodView):
         return return_template
 
     def post(self):
-        print("Mode is {}".format(request.form.get("mode")))
         mode = request.form.get("mode", "normal")
         game_modes = []
         table = None
@@ -82,7 +81,6 @@ class GameSPA(MethodView):
                 )
             else:
                 game_object = r.json()
-                print("{}".format(game_object))
                 return_template = render_template(
                     "playgame.html",
                     digits=game_object.get("digits", None),

@@ -2,13 +2,18 @@ from flask import render_template
 from initialization_package import app
 from GameSPA.GameSPA import GameSPA
 
+#
+# URL Formats:
+# cowbull_server --> http://server_url      !! Note NO TRAILING /
+# cowbull_port   --> 80                     !! Note integer
+
 # Google App Environment configuration
-#app.config["cowbull_server"] = "http://cowbull-test-project.appspot.com"
-#app.config["cowbull_port"] = 80
+app.config["cowbull_server"] = "http://cowbull-test-project.appspot.com"
+app.config["cowbull_port"] = 80
 
 # Localhost configuration
-app.config["cowbull_server"] = "http://localhost"
-app.config["cowbull_port"] = 8000
+#app.config["cowbull_server"] = "http://localhost"
+#app.config["cowbull_port"] = 8000
 
 app.config["cowbull_version"] = "v0_1"
 app.config["cowbull_url"] = "{}:{}/{}".format(
