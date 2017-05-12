@@ -10,7 +10,7 @@
     g_cowbull_url = "{{game_url}}";
 </script>
 <script src="{{ url_for('static', filename='js/validateDigit.js') }}?v=0.2"></script>
-<script src="{{ url_for('static', filename='js/makeGuess.js') }}?v=0.3.94"></script>
+<script src="{{ url_for('static', filename='js/makeGuess.js') }}?v=0.3.95"></script>
 <h1>CowBull SPA</h1>
 {% endblock %}
 {% block body %}
@@ -81,7 +81,7 @@
 <hr>
 <p>Start a new game: </p>
 <p>
-    <form action="#" method="post">
+    <form action="/" method="post">
         {% for mode in modes_table %}
             <input class="btn-primary" type="submit" name="mode" value="{{mode.mode}}"/>
         {% endfor %}
