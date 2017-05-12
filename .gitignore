@@ -2,6 +2,7 @@
 # D Sanders
 #
 .idea/
+lib/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
