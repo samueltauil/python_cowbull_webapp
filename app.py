@@ -9,8 +9,8 @@ from GameSPA.GameSPA import GameSPA
 # cowbull_port   --> 80                     !! Note integer
 
 # Google App Environment configuration
-cowbull_server = os.getenv("cowbull_server", "http://cowbull-test-project.appspot.com")
-cowbull_port = os.getenv("cowbull_port", 80)
+cowbull_server = os.getenv("COWBULL_SERVER", "http://cowbull-test-project.appspot.com")
+cowbull_port = os.getenv("COWBULL_PORT", 80)
 app.config["cowbull_server"] = cowbull_server
 app.config["cowbull_port"] = cowbull_port
 
