@@ -96,3 +96,6 @@ class GameSPA(MethodView):
             )
 
         return return_template
+
+    def put(self):
+        pass

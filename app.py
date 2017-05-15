@@ -1,31 +1,12 @@
+import logging
 import os
 from flask import render_template
 from initialization_package import app
 from GameSPA.GameSPA import GameSPA
+from Utilities.set_config import set_config
 
-#
-# URL Formats:
-# cowbull_server --> http://server_url      !! Note NO TRAILING /
-# cowbull_port   --> 80                     !! Note integer
-
-# Google App Environment configuration
-cowbull_server = os.getenv("COWBULL_SERVER", "http://cowbull-test-project.appspot.com")
-cowbull_port = os.getenv("COWBULL_PORT", 80)
-print("Connecting to {} on {}".format(cowbull_server, cowbull_port))
-
-app.config["cowbull_server"] = cowbull_server
-app.config["cowbull_port"] = cowbull_port
-
-# Localhost configuration
-#app.config["cowbull_server"] = "http://localhost"
-#app.config["cowbull_port"] = 8000
-
-app.config["cowbull_version"] = "v0_1"
-app.config["cowbull_url"] = "{}:{}/{}".format(
-    app.config["cowbull_server"],
-    app.config["cowbull_port"],
-    app.config["cowbull_version"]
-)
+# Set configuration
+set_config(app=app)
 
 # Add a game view. The game view is actually contained within a class
 # based on a MethodView. See flask_controllers/GameController.py
@@ -33,16 +14,13 @@ game_view = GameSPA.as_view('Game')
 app.add_url_rule(
     '/',
     view_func=game_view,
-    methods=["GET", "POST"]
+    methods=["GET", "POST", "PUT"]
 )
 
 if __name__ == "__main__":
     app.run\
         (
-            host="0.0.0.0",
-            port=5000,
+            host=app.config["FLASK_HOST"],
+            port=app.config["FLASK_PORT"],
             debug=True
-#            host=app.config["FLASK_HOST"],
-#            port=app.config["FLASK_PORT"],
-#            debug=app.config["FLASK_DEBUG"]
         )
