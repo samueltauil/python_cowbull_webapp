@@ -1,9 +1,6 @@
-import logging
-import os
-from flask import render_template
-from initialization_package import app
 from GameSPA.GameSPA import GameSPA
-from Utilities.set_config import set_config
+from initialization_package import app
+from initialization_package.set_config import set_config
 
 # Set configuration
 set_config(app=app)
@@ -18,9 +15,8 @@ app.add_url_rule(
 )
 
 if __name__ == "__main__":
-    app.run\
-        (
-            host=app.config["FLASK_HOST"],
-            port=app.config["FLASK_PORT"],
-            debug=True
-        )
+    app.run(
+        host=app.config["FLASK_HOST"],
+        port=app.config["FLASK_PORT"],
+        debug=True
+    )
