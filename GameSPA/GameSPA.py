@@ -131,10 +131,9 @@ class GameSPA(MethodView):
 
         cowbull_url = None
         try:
-            cowbull_url = "{}/game?mode={}"\
+            cowbull_url = "{}/game"\
                 .format(
-                    app.config.get('cowbull_url', None),
-                    mode
+                    app.config.get('cowbull_url', None)
                 )
             if cowbull_url is None:
                 raise BadRequest(description="CowBull URL is Null! The game cannot play!")
