@@ -152,7 +152,7 @@ class GameSPA(MethodView):
 
         r = None
         try:
-            r = requests.put(url=cowbull_url, data=json_dict)
+            r = requests.post(url=cowbull_url, data=json_dict)
             logging.debug("XHR Request returned status {}".format(r.status_code))
         except Exception as e:
             response = Response(
