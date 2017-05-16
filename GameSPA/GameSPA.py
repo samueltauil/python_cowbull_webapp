@@ -1,8 +1,11 @@
+import json
+import logging
 import requests
-from requests import exceptions
-from initialization_package import app
-from flask import render_template, request
+from flask import render_template, request, Response
 from flask.views import MethodView
+from initialization_package import app
+from requests import exceptions
+from werkzeug.exceptions import BadRequest
 
 
 class GameSPA(MethodView):
@@ -98,4 +101,32 @@ class GameSPA(MethodView):
         return return_template
 
     def put(self):
+        # Check circuit breaker
+
+        #
+        # Get the JSON from the request
+        #
+        try:
+            logging.debug('Attempting to load JSON from PUT request')
+            json_dict = request.get_json()
+            logging.debug('Loaded JSON. Returned: {}'.format(json_dict))
+
+            key = json_dict.get('key', None)
+            digits = json_dict.get('digits', [])
+            if key is None or digits == []:
+                raise BadRequest(
+                    description="The JSON is malformed; either key is None or there are no digits."
+                )
+        except BadRequest as br:
+            response = Response(
+                response=json.dumps({
+                    "status": 400,
+                    "message": "Failed to respond to guess.",
+                    "exception": str(br)
+                }),
+                status=400,
+                mimetype="application/json"
+            )
+            return response
+
         pass
