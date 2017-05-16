@@ -80,7 +80,7 @@ function makeGuess() {
         }
     };
 
-    xhttp.open("PUT", g_cowbull_url, true)
+    xhttp.open("POST", g_cowbull_url, true)
     xhttp.setRequestHeader("Content-Type", "application/json")
     xhttp.send(JSON.stringify(params), "json")
 }
