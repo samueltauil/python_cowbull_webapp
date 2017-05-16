@@ -124,7 +124,7 @@ class GameSPA(MethodView):
                     "message": "Failed to respond to guess.",
                     "exception": str(br)
                 }),
-                status=400,
+                status=500,
                 mimetype="application/json"
             )
             return response
@@ -137,6 +137,7 @@ class GameSPA(MethodView):
                 )
             if cowbull_url is None:
                 raise BadRequest(description="CowBull URL is Null! The game cannot play!")
+            logging.debug("Setting cowbull url to: {}".format(cowbull_url))
         except BadRequest as br:
             response = Response(
                 response=json.dumps({
@@ -144,7 +145,7 @@ class GameSPA(MethodView):
                     "message": "Failed to respond to guess.",
                     "exception": str(br)
                 }),
-                status=400,
+                status=500,
                 mimetype="application/json"
             )
             return response
@@ -152,6 +153,7 @@ class GameSPA(MethodView):
         r = None
         try:
             r = requests.put(url=cowbull_url, data=json_dict)
+            logging.debug("XHR Request returned status {}".format(r.status_code))
         except Exception as e:
             response = Response(
                 response=json.dumps({
@@ -159,7 +161,7 @@ class GameSPA(MethodView):
                     "message": "Failed to respond to guess.",
                     "exception": repr(e)
                 }),
-                status=400,
+                status=500,
                 mimetype="application/json"
             )
             return response
@@ -183,7 +185,7 @@ class GameSPA(MethodView):
                     "message": "Failed to respond to guess.",
                     "exception": str(br)
                 }),
-                status=400,
+                status=500,
                 mimetype="application/json"
             )
             return response
@@ -194,7 +196,7 @@ class GameSPA(MethodView):
                     "message": "Failed to respond to guess.",
                     "exception": str(br)
                 }),
-                status=400,
+                status=500,
                 mimetype="application/json"
             )
             return response
