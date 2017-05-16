@@ -39,8 +39,7 @@ class GameSPA(MethodView):
                 digits=0,
                 guesses=0,
                 game_modes=game_modes,
-                modes_table=table,
-                game_url="{}/game".format(app.config.get("cowbull_url", ""))
+                modes_table=table
             )
         else:
             return_template = render_template(
@@ -87,8 +86,7 @@ class GameSPA(MethodView):
                     guesses=game_object.get("guesses", None),
                     key=game_object.get("key", None),
                     served_by=game_object.get("served-by", "None"),
-                    modes_table=app.config.get("mode_table", []),
-                    game_url="{}/game".format(app.config.get("cowbull_url", ""))
+                    modes_table=app.config.get("mode_table", [])
                 )
         else:
             return_template = render_template(
