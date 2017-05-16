@@ -182,7 +182,7 @@ class GameSPA(MethodView):
                 response=json.dumps({
                     "status": 500,
                     "message": "Failed to respond to guess.",
-                    "exception": str(br)
+                    "exception": str(ve)
                 }),
                 status=500,
                 mimetype="application/json"
