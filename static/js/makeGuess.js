@@ -50,7 +50,7 @@ function parseResponse(text) {
 
 function makeGuess() {
     var play_status = document.getElementById("play_status");
-    play_status.innerHTML = "Connecting to game @ " + g_cowbull_url;
+    play_status.innerHTML = "Connecting to game server. Please wait...";
 
     /* Build digits */
     list_of_guesses = [];
