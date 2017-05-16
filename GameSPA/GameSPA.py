@@ -120,7 +120,7 @@ class GameSPA(MethodView):
         except BadRequest as br:
             response = Response(
                 response=json.dumps({
-                    "status": 400,
+                    "status": 500,
                     "message": "Failed to respond to guess.",
                     "exception": str(br)
                 }),
@@ -129,4 +129,79 @@ class GameSPA(MethodView):
             )
             return response
 
-        pass
+        cowbull_url = None
+        try:
+            cowbull_url = "{}/game?mode={}"\
+                .format(
+                    app.config.get('cowbull_url', None),
+                    mode
+                )
+            if cowbull_url is None:
+                raise BadRequest(description="CowBull URL is Null! The game cannot play!")
+        except BadRequest as br:
+            response = Response(
+                response=json.dumps({
+                    "status": 500,
+                    "message": "Failed to respond to guess.",
+                    "exception": str(br)
+                }),
+                status=400,
+                mimetype="application/json"
+            )
+            return response
+
+        r = None
+        try:
+            r = requests.put(url=cowbull_url, data=json_dict)
+        except Exception as e:
+            response = Response(
+                response=json.dumps({
+                    "status": 400,
+                    "message": "Failed to respond to guess.",
+                    "exception": repr(e)
+                }),
+                status=400,
+                mimetype="application/json"
+            )
+            return response
+
+        try:
+            if r is None:
+                raise BadRequest(description="There was no response from the game server.")
+
+            json_response = None
+            try:
+                json_response = r.json()
+            except Exception as e:
+                raise BadRequest(description="There was no JSON returned from the game server.")
+
+            if r.status_code != 200:
+                raise ValueError("Bad status code {}.".format(r.status_code))
+        except ValueError as ve:
+            response = Response(
+                response=json.dumps({
+                    "status": 500,
+                    "message": "Failed to respond to guess.",
+                    "exception": str(br)
+                }),
+                status=400,
+                mimetype="application/json"
+            )
+            return response
+        except BadRequest as br:
+            response = Response(
+                response=json.dumps({
+                    "status": 500,
+                    "message": "Failed to respond to guess.",
+                    "exception": str(br)
+                }),
+                status=400,
+                mimetype="application/json"
+            )
+            return response
+
+        return Response(
+            response=json.dumps(r.json()),
+            status=r.status_code,
+            mimetype="application/json"
+        )
