@@ -1,0 +1,13 @@
+runtime: custom
+env: flex
+api_version: 1
+threadsafe: true
+service: webapp-docker
+
+handlers:
+- url: /.*
+  script: app.app
+
+env_variables:
+  COWBULL_SERVER: "http://cowbull-test-project.appspot.com"
+  COWBULL_PORT: 80

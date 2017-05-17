@@ -18,5 +18,5 @@ COPY		static /cowbull/static/
 COPY        	app.py  /cowbull/
 COPY		__init__.py /cowbull/
 COPY        	LICENSE /cowbull/
-CMD		["gunicorn", "-b", "0.0.0.0:5000", "-w", "4", "app:app"]
-EXPOSE		5000
+CMD		["gunicorn", "-b", "0.0.0.0:8080", "-w", "4", "app:app"]
+EXPOSE		8080
