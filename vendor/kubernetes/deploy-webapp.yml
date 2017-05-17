@@ -5,16 +5,16 @@ metadata:
   labels:
     run: webapp
     app: webapp
-    tier: frontend
+    tier: webappFrontend
 spec:
   selector:
     app: webapp
-    tier: frontend
+    tier: webappFrontend
+  type: NodePort
   ports:
-    - protocol: TCP
-      targetPort: 5000
-      port: 80
-  type: LoadBalancer
+    - port: 8080
+      targetPort: 8080
+      nodePort: 32000
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -27,11 +27,11 @@ spec:
       labels:
         app: webapp
         run: webapp
-        tier: frontend
+        tier: webappFrontend
     spec:
       containers:
       - name: webapp
-        image: dsanderscan/webapp_v5:latest
+        image: dsanderscan/cowbull_webapp:latest
         resources:
           requests:
             cpu: '0.1'
@@ -39,9 +39,9 @@ spec:
         env:
         - name: LOGGING_LEVEL
           value: "10"
-        - name: REDIS_HOST
-          value: "redis-master"
-        - name: REDIS_PORT
-          value: "6379"
+        - name: COWBULL_HOST
+          value: "http://cowbull-svc"
+        - name: COWBULL_PORT
+          value: "5000"
         ports:
-        - containerPort: 5000
+        - containerPort: 8080
