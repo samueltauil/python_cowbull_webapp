@@ -13,9 +13,7 @@ class GameSPA(MethodView):
         error_message = ""
         r = None
 
-        cowbull_url = "{}/modes?textmode=true"\
-            .format(app.config.get('cowbull_url', None))
-
+        cowbull_url = "{}/modes".format(app.config.get('cowbull_url', None))
         if cowbull_url is None:
             raise ValueError("CowBull URL is Null!")
 
