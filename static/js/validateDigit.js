@@ -1,5 +1,7 @@
 function validateDigit(digit) {
     var status = document.getElementById("error_status");
+    return true
+
     var x = digit.value;
     if (isNaN(x) || x == '' || x < 0 || x > 9) {
         digit.style.backgroundColor = "red";
