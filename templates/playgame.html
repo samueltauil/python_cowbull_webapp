@@ -30,11 +30,10 @@
         <input id="digit_{{i}}"
                required="required"
                name="digit_{{i}}_name"
+               type="text"
                width="2"
                type="number"
                value="{{i}}"
-               min="0"
-               max="9"
                onblur="validateDigit(this);"
         > &nbsp;
     {% endfor %}
