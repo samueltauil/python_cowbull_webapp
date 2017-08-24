@@ -56,7 +56,7 @@ function makeGuess() {
     list_of_guesses = [];
     for (var dig = 0; dig < g_digits; dig++) {
         digit = document.getElementById('digit_'+dig);
-        list_of_guesses.push(parseInt(digit.value));
+        list_of_guesses.push(digit.value);
     }
     params = {
         key: g_key,
