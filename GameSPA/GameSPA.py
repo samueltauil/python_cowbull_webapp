@@ -175,8 +175,17 @@ class GameSPA(MethodView):
             except Exception as e:
                 raise BadRequest(description="There was no JSON returned from the game server.")
 
+            if r.status_code == 400:
+                raise TypeError("Game server reported an error")
             if r.status_code != 200:
                 raise ValueError("Bad status code {}.".format(r.status_code))
+        except TypeError as te:
+            response = Response(
+                response=json.dumps(r.json()),
+                status=400,
+                mimetype="application/json"
+            )
+            return response
         except ValueError as ve:
             response = Response(
                 response=json.dumps({

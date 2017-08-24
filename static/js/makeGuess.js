@@ -74,7 +74,12 @@ function makeGuess() {
                 console.log('Success. Processing game response ' + this.responseText);
                 json_response = parseToJSON(this.responseText);
                 analyzeGuess(json_response);
-            } else {
+            }
+            else if (this.status == 400) {
+                json_response = parseToJSON(this.responseText);
+                play_status.innerHTML = json_response.exception;
+            }
+            else {
                 console.log('An error occurred: ' + this.responseText);
             }
         }
