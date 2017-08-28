@@ -17,7 +17,7 @@ def set_config(app=None):
     logging.basicConfig(
         level=logging.DEBUG,
         format=os.getenv(
-            "LOGGING_FORMAT",
+            "logging_format",
             "%(asctime)s %(levelname)s: %(message)s"
         )
     )
