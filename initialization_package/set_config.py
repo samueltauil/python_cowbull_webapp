@@ -34,7 +34,7 @@ def set_config(app=None):
             "localhost"
         )
     )
-    app.config["cowbull_server"] = cowbull_server
+    app.config["cowbull_server"] = "cowbull-test-project.appspot.com" #cowbull_server
     logging.debug("Setting COWBULL_SERVER --> {}".format(app.config["cowbull_server"]))
 
     logging.debug("Setting COWBULL_PORT")
