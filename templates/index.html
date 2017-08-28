@@ -2,7 +2,6 @@
 {% block title %}CowBull SPA{% endblock %}
 
 {% block header %}
-    <h1>CowBull, a number guessing game</h1>
 {% endblock %}
 
 {% block instructions %}
@@ -25,18 +24,17 @@
 {% endblock %}
 
 {% block game %}
-<p>
-    Your game is being served by {{gameserver}}. Choose a mode above to start a game at any time (even
-    during a game).
-</p>
-{% endblock %}
-
-{% block controls %}
-<form method="post">
-    {% for mode in modes_table %}
-        <input class="btn-primary" type="submit" name="mode" value="{{mode.mode}}"/>
-    {% endfor %}
-</form>
+<div id="game" class="jumbotron jumbotron-fluid game_off">
+    <h3>
+        Welcome to the game!
+    </h3>
+    <p>
+        This is your game area. Start a game by choosing one of the
+        modes above (provided by the game server {{gameserver}}); during a game,
+        simply press one of the mode buttons to start a new game.
+    </p>
+    <p>Good luck!</p>
+</div>
 {% endblock %}
 
 {% block footer %}

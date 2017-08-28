@@ -11,10 +11,22 @@
     <div id="container">
         <script src="https://code.jquery.com/jquery.js"></script>
         <script src="{{ url_for('static', filename='bootstrap-3.3.7-dist/js/bootstrap.min.js') }}"></script>
-        <header id="header">{% block header %}{% endblock %}</header>
-        <div id="controls">{% block controls %}{% endblock %}</div>
-        <div id="game">{% block game %}{% endblock %}</div>
-        <div id="instructions">{% block instructions %}{% endblock %}</div>
+        <header id="header">
+            {% block header %}{% endblock %}
+            <h2 class="display-3">CowBull, a guessing game</h2>
+        </header>
+        <nav id="controls" class="navbar navbar-dark bg-primary">
+            <form method="post" class="form-inline">
+                <span class="navbar-brand">CowBull: </span>
+                {% for mode in modes_table %}
+                    <input class="nav_button btn btn-primary my-2 my-sm-0" type="submit" name="mode" value="{{mode.mode}}"/>
+                {% endfor %}
+            </form>
+        </nav>
+        <div id="game_container">
+            {% block game %}{% endblock %}
+            <div id="instructions">{% block instructions %}{% endblock %}</div>
+        </div>
         <footer id="footer">{% block footer %}{% endblock %}</footer>
     </div>
 </body>

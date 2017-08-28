@@ -9,85 +9,74 @@
         g_try = 0;
         g_key = "{{key}}";
     </script>
-    <script src="{{ url_for('static', filename='js/validateDigit.js') }}?v=0.4"></script>
-    <script src="{{ url_for('static', filename='js/makeGuess.js') }}?v=0.6"></script>
-    <h1>CowBull, a number guessing game</h1>
-{% endblock %}
-
-{% block controls %}
-<form method="post">
-    {% for mode in modes_table %}
-        <input class="btn-primary" type="submit" name="mode" value="{{mode.mode}}"/>
-    {% endfor %}
-</form>
+<!--    <script src="{{ url_for('static', filename='js/validateDigit.js') }}?v=0.4"></script> -->
+    <script src="{{ url_for('static', filename='js/makeGuess.js') }}?v=0.9"></script>
 {% endblock %}
 
 {% block game %}
-<p>
-    <span id="play_status">
-        You have {{guesses}} guesses remaining. Please make your first guess.
-    </span>
-</p>
-<hr>
-<form>
-    &nbsp;
-    {% for i in range(digits) %}
-        <input id="digit_{{i}}"
-               class="digit"
-               required="required"
-               name="digit_{{i}}_name"
-               type="text"
-               width="2"
-               value="{{i}}"
-               onblur="validateDigit(this);"
-        > &nbsp;
-    {% endfor %}
-    <script type="text/javascript">
-        for (i = 0; i < g_guesses; i++) {
-            var digit = document.getElementById('digit_'+i);
-/*            digit.addEventListener("blur", validateDigit); */
-        }
-    </script>
-    <input type="button"
-           class="btn-primary"
-           value="Make a guess"
-           onclick="makeGuess();"
-    >
-    &nbsp;
-    <span id="error_status"></span>
-</form>
-<hr>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Try</th>
-            {% for i in range(digits) %}
-                {% set header = i + 1 %}
-                <th>Digit {{header}}</th>
-            {% endfor %}
-        </tr>
-    </thead>
-    <tbody>
-        {% for i in range(guesses) %}
-            {% set row = i + 1 %}
-            <tr>
-                <td>{{row}}</td>
-                {% for j in range(digits) %}
-                    <td>
-                        <span class="placeholder" id="row_{{i}}_col_{{j}}">&nbsp;&nbsp;</span>
-                    </td>
+<div id="game" class="game_on">
+    <p>
+        <span id="play_status">
+            You have {{guesses}} guesses remaining. Please make your first guess.
+        </span>
+    </p>
+    <form>
+        &nbsp;
+        {% for i in range(digits) %}
+            <input id="digit_{{i}}"
+                   class="digit"
+                   required="required"
+                   name="digit_{{i}}_name"
+                   type="text"
+                   width="2"
+                   value="{{i}}"
+                   onblur="validateDigit(this);"
+            > &nbsp;
+        {% endfor %}
+        <script type="text/javascript">
+            for (i = 0; i < g_guesses; i++) {
+                var digit = document.getElementById('digit_'+i);
+    /*            digit.addEventListener("blur", validateDigit); */
+            }
+        </script>
+        <input type="button"
+               class="btn-primary"
+               value="Make a guess"
+               onclick="makeGuess();"
+        >
+        &nbsp;
+        <span id="error_status"></span>
+    </form>
+    <hr>
+    <table class="table">
+        <thead>
+            <tr class="digit_row">
+                <th class="digit_output">Try</th>
+                {% for i in range(digits) %}
+                    {% set header = i + 1 %}
+                    <th class="digit_output">Digit {{header}}</th>
                 {% endfor %}
             </tr>
-        {% endfor %}
-    </tbody>
-</table>
-<hr>
+        </thead>
+        <tbody>
+            {% for i in range(guesses) %}
+                {% set row = i + 1 %}
+                <tr class="digit_row">
+                    <td class="digit_output">{{row}}</td>
+                    {% for j in range(digits) %}
+                        <td class="digit_output">
+                            <span class="placeholder" id="row_{{i}}_col_{{j}}">&nbsp;&nbsp;</span>
+                        </td>
+                    {% endfor %}
+                    <td>&nbsp</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}
 
 {% block instructions %}
-<p>
-    Okay, <strong><em>Game On!</em></strong>
-</p>
 <table class="instruction_table">
     <tr>
         <td class="col1">Guesses</td>
@@ -111,12 +100,32 @@
     and then choosing 'Make a guess'. Your guesses will then be
     highlighted as follows:
 </p>
-<ul>
-    <li><span class="bull">bull</span> correct in the right place;</li>
-    <li><span class="cow">cow</span> correct but in the <em>wrong</em> place;</li>
-    <li><span class="miss">miss</span> is incorrect;</li>
-    <li><span class="multiple">multiple</span> occurs more than once.</li>
-</ul>
+<table class="key_table">
+    <tr>
+        <td class="col1 bull">&nbsp;</td>
+        <td class="col2">Correct, in the right place</td>
+    </tr>
+    <tr>
+        <td class="col1 cow">&nbsp;</td>
+        <td class="col2">Correct, but in the <em>wrong</em> place</td>
+    </tr>
+    <tr>
+        <td class="col1 miss">&nbsp;</td>
+        <td class="col2">Incorrect</td>
+    </tr>
+</table>
+<table class="key_table">
+    <tr>
+        <td class="col1 bull multiple">&nbsp;</td>
+        <td class="col2">Bull (more than one)</td>
+    </tr>
+</table>
+<table class="key_table">
+    <tr>
+        <td class="col1 cow multiple">&nbsp;</td>
+        <td class="col2">Cow (more than one)</td>
+    </tr>
+</table>
 {% endblock%}
 
 {% block footer %}

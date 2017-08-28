@@ -19,13 +19,12 @@ function analyzeGuess(json_response) {
     for (var i = 0; i < g_digits; i++) {
         var outfield = document.getElementById('row_' + (g_try - 1)  + '_col_'+i);
         outfield.innerHTML = analysis[i].digit;
-        outfield.className = "nothing";
-        console.log('Checking match --> ' + analysis[i].match);
-        console.log('Checking in_word --> ' + analysis[i].in_word);
-        console.log('Checking multiple --> ' + analysis[i].multiple);
-        outfield.className = "miss "
-        if (analysis[i].in_word) {outfield.className = "cow "}
-        if (analysis[i].match) {outfield.className = "bull "}
+        outfield.className = "miss"
+        if (analysis[i].match) {
+            outfield.className += " bull "
+        } else if (analysis[i].in_word) {
+            outfield.className += " cow "
+        }
         if (analysis[i].multiple) {outfield.className += " multiple "}
     }
 /*    alert(json_response.outcome.bulls + ' bulls and ' + json_response.outcome.cows + ' cows.'); */

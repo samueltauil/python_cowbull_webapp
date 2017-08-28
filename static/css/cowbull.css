@@ -13,7 +13,6 @@ li {
   padding: 4px;
 }
 
-
 /* Elements */
 
 #container {
@@ -25,23 +24,54 @@ li {
 }
 
 #header {
+    margin: 0px;
+    margin-bottom: 10px;
+    padding: 5px;
+    padding-bottom: 10px;
 }
 
 #controls {
-    border-top: 1px solid gray;
-    border-bottom: 1px solid gray;
-    margin-bottom: 5px;
-    margin-top: 5px;
-    padding: 5px;
+    border: 1px solid gray;
+    padding: 0px;
+    margin: 0px;
+    margin-bottom: 10px;
+}
+
+#game_container {
+    display: inline-block;
+    overflow: hidden;
 }
 
 #game {
-    max-width: 70%;
-    min-width: 70%;
-    width: 70%;
+    position: relative;
     float: left;
+    width: 60%;
+    min-width: 550px;
     overflow: hidden;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
+    margin-left: 5px;
+    background-color: white;
+}
+
+#instructions {
+    min-width: 200px;
+    max-width: 29%;
+    float: left;
+    margin-left: 10px;
+    margin-bottom: 20px;
+    height: 100%;
+    padding: 5px;
+}
+
+.game_on {
+    border: 1px solid gray;
+    box-shadow: 3px 3px gray;
+    padding: 5px;
+}
+
+.game_off {
+    border: 0px solid gray;
+    padding: 5px;
 }
 
 #footer {
@@ -53,27 +83,25 @@ li {
     height: 32px;
 }
 
-#instructions {
-    max-width: 29%;
-    min-width: 29%;
-    width: 29%;
-    float: left;
-    margin-left: 10px;
-    height: 100%;
-    padding: 5px;
-}
-
 /* Classes */
-.nothing {
-    padding: 2px;
-    background-color: white;
+
+/* Navbar controls */
+
+.nav_button {
+    margin-top: 6px;
+    color: white;
+    font-size: large;
 }
 
-/* Instructions table */
+/* Instructions and key table */
 .instruction_table {
     width: 100%;
-    border-top: 1px solid gray;
     border-bottom: 1px solid gray;
+    margin-bottom: 15px;
+}
+
+.key_table {
+    width: 100%;
     margin-bottom: 15px;
 }
 
@@ -81,11 +109,16 @@ li {
     width: 20%;
     color: blue;
     font-size: large;
+    vertical-align: top;
+    margin-right: 10px;
 }
 
 .col2 {
     font-size: large;
+    margin-left: 10px;
+    padding-left: 10px;
     width: 80%;
+    vertical-align: top;
 }
 
 /* Inputs */
@@ -94,7 +127,21 @@ li {
     font-size: large;
 }
 
+.digit_output {
+    width: 75px;
+    text-align: center;
+}
+
+.digit_row {
+    height: 40px;
+}
+
 /* Cow, Bull, Multiple, or Miss */
+.nothing {
+    padding: 2px;
+    background-color: white;
+}
+
 .placeholder {
     padding: 2px;
     color: white;
@@ -102,30 +149,27 @@ li {
 }
 
 .miss {
-    padding: 2px;
-    background-color: red;
-    color: white;
-    border: 2px solid red;
+    padding-left: 6px;
+    padding-right: 6px;
+    background-color: white;
+    color: black;
+    border: 2px solid black;
+/*    box-shadow: 2px 2px black; */
     font-size: large;
 }
 
 .bull {
-    padding: 2px;
-    background-color: darkgreen;
+    background-color: ForestGreen;
     border: 2px solid black;
     color: white;
-    font-size: large;
 }
 
 .cow {
-    padding: 2px;
-    background-color: yellow;
+    background-color: Gold;
     border: 2px solid black;
-    font-size: large;
 }
 
 .multiple {
-    padding: 2px;
-    border: 2px solid red;
-    font-size: large;
+    border: 2px solid black;
+    box-shadow: 3px 0px Red;
 }
