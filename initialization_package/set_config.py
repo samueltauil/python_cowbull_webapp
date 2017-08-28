@@ -18,7 +18,10 @@ def set_config(app=None):
         level=logging.DEBUG,
         format=os.getenv(
             "logging_format",
-            "%(asctime)s %(levelname)s: %(message)s"
+            os.getenv(
+                "LOGGING_FORMAT",
+                "%(asctime)s %(levelname)s: %(message)s"
+            )
         )
     )
 
@@ -26,7 +29,10 @@ def set_config(app=None):
     logging.debug("Setting COWBULL_SERVER")
     cowbull_server = os.getenv(
         "cowbull_host",
-        "localhost"
+        os.getenv(
+            "COWBULL_HOST",
+            "localhost"
+        )
     )
     app.config["cowbull_server"] = cowbull_server
     logging.debug("Setting COWBULL_SERVER --> {}".format(app.config["cowbull_server"]))
@@ -34,7 +40,10 @@ def set_config(app=None):
     logging.debug("Setting COWBULL_PORT")
     cowbull_port = os.getenv(
         "cowbull_port",
-        5000
+        os.getenv(
+            "COWBULL_PORT",
+            5000
+        )
     )
     app.config["cowbull_port"] = cowbull_port
     logging.debug("Setting COWBULL_PORT --> {}".format(app.config["cowbull_port"]))
@@ -42,14 +51,20 @@ def set_config(app=None):
     logging.debug("Setting FLASK_HOST")
     app.config["FLASK_HOST"] = os.getenv(
         "flask_host",
-        "0.0.0.0"
+        os.getenv(
+            "FLASK_HOST",
+            "0.0.0.0"
+        )
     )
 
     logging.debug("Setting FLASK_PORT")
     try:
         app.config["FLASK_PORT"] = int(os.getenv(
             "flask_port",
-            8001
+            os.getenv(
+                "FLASK_PORT",
+                8001
+            )
         ))
     except ValueError:
         app.config["FLASK_PORT"] = 8001
