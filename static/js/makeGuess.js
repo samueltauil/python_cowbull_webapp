@@ -23,6 +23,7 @@ function analyzeGuess(json_response) {
         console.log('Checking match --> ' + analysis[i].match);
         console.log('Checking in_word --> ' + analysis[i].in_word);
         console.log('Checking multiple --> ' + analysis[i].multiple);
+        outfield.className = "miss "
         if (analysis[i].in_word) {outfield.className = "cow "}
         if (analysis[i].match) {outfield.className = "bull "}
         if (analysis[i].multiple) {outfield.className += " multiple "}

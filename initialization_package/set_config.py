@@ -7,7 +7,7 @@ def set_config(app=None):
         raise ValueError("APP is undefined!!")
 
     #
-    # Expected OS Env Vars:
+    # Expected OS Env Vars (lower case):
     # LOGGING_FORMAT --> Python logging fmt     !! Default: "%(asctime)s %(levelname)s: %(message)s"
     # COWBULL_SERVER --> http://server_url      !! Note NO TRAILING /
     # COWBULL_PORT   --> 80                     !! Note integer
@@ -25,38 +25,38 @@ def set_config(app=None):
     # Google App Environment configuration
     logging.debug("Setting COWBULL_SERVER")
     cowbull_server = os.getenv(
-        "COWBULL_HOST",
-        "http://cowbull-test-project.appspot.com"
+        "cowbull_host",
+        "localhost"
     )
     app.config["cowbull_server"] = cowbull_server
 
     logging.debug("Setting COWBULL_PORT")
     cowbull_port = os.getenv(
-        "COWBULL_PORT",
-        80
+        "cowbull_port",
+        5000
     )
     app.config["cowbull_port"] = cowbull_port
 
     logging.debug("Setting FLASK_HOST")
     app.config["FLASK_HOST"] = os.getenv(
-        "FLASK_HOST",
+        "flask_host",
         "0.0.0.0"
     )
 
     logging.debug("Setting FLASK_PORT")
     try:
         app.config["FLASK_PORT"] = int(os.getenv(
-            "FLASK_PORT",
-            5000
+            "flask_port",
+            8001
         ))
     except ValueError:
-        app.config["FLASK_PORT"] = 5000
+        app.config["FLASK_PORT"] = 8001
 
     logging.debug("Setting COWBULL_VERSION")
     app.config["cowbull_version"] = "v0_1"
 
     logging.debug("Setting COWBULL_URL")
-    app.config["cowbull_url"] = "{}:{}/{}".format(
+    app.config["cowbull_url"] = "http://{}:{}/{}".format(
         app.config["cowbull_server"],
         app.config["cowbull_port"],
         app.config["cowbull_version"]

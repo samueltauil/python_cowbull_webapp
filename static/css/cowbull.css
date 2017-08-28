@@ -1,5 +1,7 @@
 body {
+    background-color: white;
     margin: 2px;
+    height: 100%;
 }
 
 p {
@@ -8,29 +10,122 @@ p {
 
 li {
   font-size: large;
+  padding: 4px;
 }
 
-span {
-    font-size: large;
+
+/* Elements */
+
+#container {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -42px;
+    overflow: hidden;
 }
 
+#header {
+}
+
+#controls {
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding: 5px;
+}
+
+#game {
+    max-width: 70%;
+    min-width: 70%;
+    width: 70%;
+    float: left;
+    overflow: hidden;
+    margin-bottom: 50px;
+}
+
+#footer {
+    background-color: white;
+    min-width: 100%;
+    float: left;
+    position: fixed;
+    bottom: 0;
+    height: 32px;
+}
+
+#instructions {
+    max-width: 29%;
+    min-width: 29%;
+    width: 29%;
+    float: left;
+    margin-left: 10px;
+    height: 100%;
+    padding: 5px;
+}
+
+/* Classes */
 .nothing {
     padding: 2px;
     background-color: white;
 }
 
+/* Instructions table */
+.instruction_table {
+    width: 100%;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    margin-bottom: 15px;
+}
+
+.col1 {
+    width: 20%;
+    color: blue;
+    font-size: large;
+}
+
+.col2 {
+    font-size: large;
+    width: 80%;
+}
+
+/* Inputs */
+.digit {
+    width: 30px;
+    font-size: large;
+}
+
+/* Cow, Bull, Multiple, or Miss */
+.placeholder {
+    padding: 2px;
+    color: white;
+    font-size: large;
+}
+
+.miss {
+    padding: 2px;
+    background-color: red;
+    color: white;
+    border: 2px solid red;
+    font-size: large;
+}
+
 .bull {
     padding: 2px;
     background-color: darkgreen;
+    border: 2px solid black;
     color: white;
+    font-size: large;
 }
 
 .cow {
     padding: 2px;
     background-color: yellow;
+    border: 2px solid black;
+    font-size: large;
 }
 
 .multiple {
     padding: 2px;
     border: 2px solid red;
+    font-size: large;
 }

@@ -1,29 +1,44 @@
 {% extends "base_template.html" %}
 {% block title %}CowBull SPA{% endblock %}
+
 {% block header %}
-<h1>CowBull SPA</h1>
+    <h1>CowBull, a number guessing game</h1>
 {% endblock %}
-{% block body %}
+
+{% block instructions %}
 <p>
-    Welcome to the CowBull SPA Game. The objective of the game is to guess a sequence
-    of digits (numbers from 0 to 9). The modes for the game are: <strong><em>{{ game_modes }}</em></strong>.
-    Each mode has the following characteristics:
+    Welcome to the CowBull game. The objective of this game is to guess
+    a set of digits by entering a sequence of numbers. Each time you try
+    to guess, you will see an analysis of your guesses and be given a
+    number of tries to win. Choose a mode to execute.
 </p>
-<ul>
-    {% for mode in modes_table %}
-    <li><strong>{{mode.mode}}: </strong> {{mode.digits}} digits with {{mode.guesses}} guesses</li>
-    {% endfor %}
-</ul>
-<hr>
-<p>Chose a game to play:</p>
 <p>
-    <form method="post">
+    The game server providing this game ({{gameserver}}) offers the following modes:
+</p>
+<p>
+    <ul>
         {% for mode in modes_table %}
-            <input class="btn-primary" type="submit" name="mode" value="{{mode.mode}}"/>
+        <li><strong>{{mode.mode}}: </strong> {{mode.digits}} digits with {{mode.guesses}} guesses</li>
         {% endfor %}
-    </form>
+    </ul>
 </p>
 {% endblock %}
+
+{% block game %}
+<p>
+    Your game is being served by {{gameserver}}. Choose a mode above to start a game at any time (even
+    during a game).
+</p>
+{% endblock %}
+
+{% block controls %}
+<form method="post">
+    {% for mode in modes_table %}
+        <input class="btn-primary" type="submit" name="mode" value="{{mode.mode}}"/>
+    {% endfor %}
+</form>
+{% endblock %}
+
 {% block footer %}
-<p class="bg-info small"><strong>CowBull version 0.1</strong></p>
+<p><strong>CowBull version 0.1</strong></p>
 {% endblock %}
