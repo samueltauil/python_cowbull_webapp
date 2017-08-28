@@ -29,6 +29,7 @@ def set_config(app=None):
         "localhost"
     )
     app.config["cowbull_server"] = cowbull_server
+    logging.debug("Setting COWBULL_SERVER --> {}".format(app.config["cowbull_server"]))
 
     logging.debug("Setting COWBULL_PORT")
     cowbull_port = os.getenv(
@@ -36,6 +37,7 @@ def set_config(app=None):
         5000
     )
     app.config["cowbull_port"] = cowbull_port
+    logging.debug("Setting COWBULL_PORT --> {}".format(app.config["cowbull_port"]))
 
     logging.debug("Setting FLASK_HOST")
     app.config["FLASK_HOST"] = os.getenv(
@@ -54,6 +56,7 @@ def set_config(app=None):
 
     logging.debug("Setting COWBULL_VERSION")
     app.config["cowbull_version"] = "v0_1"
+    logging.debug("Setting COWBULL_VERSION --> {}".format(app.config["cowbull_version"]))
 
     logging.debug("Setting COWBULL_URL")
     app.config["cowbull_url"] = "http://{}:{}/{}".format(
@@ -61,6 +64,7 @@ def set_config(app=None):
         app.config["cowbull_port"],
         app.config["cowbull_version"]
     )
+    logging.debug("Setting COWBULL_URL --> {}".format(app.config["cowbull_url"]))
 
     logging.debug("COWBULL_SERVER : {}".format(app.config["cowbull_server"]))
     logging.debug("COWBULL_PORT   : {}".format(app.config["cowbull_port"]))
