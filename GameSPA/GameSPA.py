@@ -10,7 +10,7 @@ from werkzeug.exceptions import BadRequest
 
 class GameSPA(MethodView):
     def get(self):
-        error_message = ""
+        error_message = "An error (which hasn't been logged) has occurred. Sorry :( "
         r = None
 
         cowbull_url = "{}/modes".format(app.config.get('cowbull_url', None))
@@ -32,9 +32,13 @@ class GameSPA(MethodView):
                     "mode": "Game is unavailable. Status code {}".format(r.status_code),
                     "digits": "n/a", "guesses": "n/a"
                 }]
-            else:
-                table = r.json()
-                app.config["mode_table"] = table
+                return render_template(
+                    "error.html",
+                    error_message=error_message
+                )
+
+            table = r.json()
+            app.config["mode_table"] = table
 
             game_modes = str([mode["mode"] for mode in table]).replace('[','').replace(']','').replace("'","")
 
