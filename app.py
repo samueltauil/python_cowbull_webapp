@@ -2,7 +2,7 @@ from GameSPA.GameSPA import GameSPA
 from initialization_package import app
 from initialization_package.set_config import set_config
 
-# Set configuration
+# Set configuration from environment variables.
 set_config(app=app)
 
 # Add a game view. The game view is actually contained within a class
@@ -14,6 +14,11 @@ app.add_url_rule(
     methods=["GET", "POST", "PUT"]
 )
 
+#
+# The "__main__" code block typically only executes when run from
+# the command line, e.g. python app.py. The app.run call is ignored
+# when called from environments like GAE.
+#
 if __name__ == "__main__":
     app.run(
         host=app.config["FLASK_HOST"],
