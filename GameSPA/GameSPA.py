@@ -32,19 +32,12 @@ class GameSPA(MethodView):
     server.
     """
 
-    def get(self):
-        """get provides the initial response to the browser request, gets the modes
-        supported by the game server, and presents the initial page UI to the user.
-
-        Configuration for the SPA is provided in initialization_package.set_config()
-
-        If the game server is unresponsive (for any reason), get will return a rendered
-        error template; otherwise, get returns index.html.
+    @staticmethod
+    def _fetch_modes():
         """
-
-        # Preparation
-        error_message = "An error (which hasn't been logged) has occurred. Sorry :( "
-        r = None
+        To be done
+        :return:
+        """
 
         # Get the URL for the game modes
         logging.debug("Getting cowbull_modes_url from config:")
@@ -60,18 +53,23 @@ class GameSPA(MethodView):
             r = requests.get(url=cowbull_url)
         except exceptions.ConnectionError as re:
             logging.debug("Exception: {}".format(str(re)))
-            error_message = "Game is unavailable: {}.".format(str(re))
-            return render_template(
+            error_message = "Game is unavailable. The server returned " \
+                            "an error: {}.".format(str(re))
+            return_state = False
+            return_data = render_template(
                 "error.html",
                 error_message=error_message
             )
+            return return_state, return_data
         except Exception as e:
             logging.debug("Exception: {}".format(repr(e)))
             error_message = "The game is unavailable: {}.".format(repr(e))
-            return render_template(
+            return_state = False
+            return_data = render_template(
                 "error.html",
                 error_message=error_message
             )
+            return return_state, return_data
 
         # Check the return status from the request. If it's not 200 (or any
         # other code we expected), return the error page.
@@ -79,27 +77,31 @@ class GameSPA(MethodView):
         if r is None:
             logging.debug("Exception: r is None!")
             error_message = "The game is unavailable: this is unexpected."
-            return render_template(
+            return_state = False
+            return_data = render_template(
                 "error.html",
                 error_message=error_message
             )
+            return return_state, return_data
 
         # If the return status is anything other than 200 (ok), report an error
         # and return the error page.
         if r.status_code != 200:
             logging.debug("The HTTP request returned: {}".format(str(r.status_code)))
             error_message = "Game is unavailable. Status code {}".format(r.status_code)
-            return render_template(
+            return_state = False
+            return_data = render_template(
                 "error.html",
                 error_message=error_message
             )
+            return return_state, return_data
 
         #
         # Get the modes from the JSON returned. The game server specification states the
         # schema to expect and a to do item will validate the returned JSON. The modes
-        # are stored in modes_table and in the app.config for later access. A to do
-        # item here is to add caching - we probably don't need to issue this request
-        # every time the page is loaded.
+        # are stored in modes_table and in the app.config for later access. When the
+        # value is extracted from app.config, it must be checked for staleness (i.e.
+        # the value will be []) and refreshed with a call to this method.
         #
         logging.debug("Extracting JSON from the GET request")
         try:
@@ -109,24 +111,40 @@ class GameSPA(MethodView):
         except Exception as e: # Blanket catch-all as this should never occur.
             logging.debug("Exception: {}".format(repr(e)))
             error_message = "The game is unavailable: {}.".format(repr(e))
-            return render_template(
+            return_state = False
+            return_data = render_template(
                 "error.html",
                 error_message=error_message
             )
+            return return_state, return_data
+
+        return_state = True
+        return_data = modes_table
+
+        return return_state, return_data
+
+    def get(self):
+        """get provides the initial response to the browser request, gets the modes
+        supported by the game server, and presents the initial page UI to the user.
+
+        Configuration for the SPA is provided in initialization_package.set_config()
+
+        If the game server is unresponsive (for any reason), get will return a rendered
+        error template; otherwise, get returns index.html.
+        """
+
+        # Preparation
+        error_message = "An error (which hasn't been logged) has occurred. Sorry :( "
+        r = None
 
         #
-        # Build a string of game modes which the web pages will use to present to the
-        # user and validate the modes are successful. The web page JavaScript will
-        # decide on how to structure these options to the user.
+        # Get the game modes for the server providing this game. If the call does
+        # not set valid to True, then the modes_table variable will be set to a
+        # rendered error.html page and should be returned to the caller.
         #
-        game_modes = ', '.join([mode["mode"] for mode in modes_table])
-        if not game_modes:
-            error_message = "The game server presented no modes. Debug: {}.".format(modes_table)
-            return render_template(
-                "error.html",
-                error_message=error_message
-            )
-        logging.debug("Game modes available are: {}".format(str(game_modes)))
+        valid, modes_table = self._fetch_modes()
+        if not valid:
+            return modes_table
 
         # Render the index.html template
         logging.debug("Rendering index.html template.")
@@ -134,7 +152,6 @@ class GameSPA(MethodView):
             "index.html",
             digits=0,
             guesses=0,
-            game_modes=game_modes,
             modes_table=modes_table,
             gameserver=app.config.get('cowbull_url', None)
         )
@@ -154,12 +171,15 @@ class GameSPA(MethodView):
         error template; otherwise, get returns index.html.
         """
 
-        # Preparation
+        # Get the mode from the form and default to normal if it is not present for
+        # some reason.
         mode = request.form.get("mode", "normal")
-        game_modes = []
-        table = None
-        error_message = ""
-        return_template = None
+
+        # Get the modes_table from the app config; if it is stale ([]), then it will
+        # be refreshed using _fetch_modes.
+        modes_table = app.config.get("mode_table", self._fetch_modes())
+
+        # Set the request response to None so it can be caught later.
         r = None
 
         # Get the game URL and set the mode.
@@ -175,6 +195,11 @@ class GameSPA(MethodView):
             r = requests.get(url=cowbull_url)
         except exceptions.ConnectionError as re:
             error_message = "Game is unavailable: {}.".format(str(re))
+            return render_template(
+                "error.html",
+                error_message="For some reason, it hasn't been possible "
+                              "to get a game. The raw return was: {}".format(str(re))
+            )
 
         # Check the return status from the request. If it's not 200 (or any
         # other code we expected) or it's None, return the error page.
@@ -219,7 +244,7 @@ class GameSPA(MethodView):
             guesses=game_object.get("guesses", None),
             key=game_object.get("key", None),
             served_by=game_object.get("served-by", "None"),
-            modes_table=app.config.get("mode_table", [])
+            modes_table=modes_table
         )
 
         return return_template

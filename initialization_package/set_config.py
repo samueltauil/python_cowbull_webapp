@@ -14,6 +14,9 @@ def set_config(app=None):
     # FLASK_HOST     --> 0.0.0.0                !! Only if using Flask to serve
     # FLASK_PORT     --> 5000                   !! "    "    "    "    "    "
 
+    #
+    # Set the configuration for logging
+    #
     logging.basicConfig(
         level=logging.DEBUG,
         format=os.getenv(
@@ -25,7 +28,9 @@ def set_config(app=None):
         )
     )
 
-    # Google App Environment configuration
+    #
+    # Set the server where the CowBull game is being accessed.
+    #
     logging.debug("Setting COWBULL_SERVER")
     cowbull_server = os.getenv(
         "cowbull_server",
@@ -37,6 +42,9 @@ def set_config(app=None):
     app.config["cowbull_server"] = cowbull_server
     logging.debug("Setting COWBULL_SERVER --> {}".format(app.config["cowbull_server"]))
 
+    #
+    # Set the port the CowBull game server is listening on.
+    #
     logging.debug("Setting COWBULL_PORT")
     cowbull_port = os.getenv(
         "cowbull_port",
@@ -48,6 +56,42 @@ def set_config(app=None):
     app.config["cowbull_port"] = cowbull_port
     logging.debug("Setting COWBULL_PORT --> {}".format(app.config["cowbull_port"]))
 
+    #
+    # Set the version of the game the CowBull server expects
+    #
+    logging.debug("Setting COWBULL_VERSION")
+    app.config["cowbull_version"] = "v0_1"
+    logging.debug("Setting COWBULL_VERSION --> {}".format(app.config["cowbull_version"]))
+
+    #
+    # Set the full URL for the server
+    #
+    logging.debug("Setting COWBULL_URL")
+    app.config["cowbull_url"] = "http://{}:{}/{}".format(
+        app.config["cowbull_server"],
+        app.config["cowbull_port"],
+        app.config["cowbull_version"]
+    )
+    logging.debug("Setting COWBULL_URL --> {}".format(app.config["cowbull_url"]))
+
+    #
+    # Set the full URL for getting the modes from the game server
+    #
+    logging.debug("Setting COWBULL_MODES_URL")
+    app.config["cowbull_modes_url"] = "{}/modes".format(app.config["cowbull_url"])
+    logging.debug("Setting COWBULL_MODES_URL --> {}".format(app.config["cowbull_modes_url"]))
+
+    #
+    # Set the full URL for playing the game
+    #
+    logging.debug("Setting COWBULL_GAME_URL")
+    app.config["cowbull_game_url"] = "{}/game".format(app.config["cowbull_url"])
+    logging.debug("Setting COWBULL_GAME_URL --> {}".format(app.config["cowbull_game_url"]))
+
+    #
+    # For debug only or when using Flask's built-in server. This variable sets
+    # the host that Flask will listen on, e.g. 127.0.0.1, or 0.0.0.0.
+    #
     logging.debug("Setting FLASK_HOST")
     app.config["FLASK_HOST"] = os.getenv(
         "flask_host",
@@ -57,6 +101,10 @@ def set_config(app=None):
         )
     )
 
+    #
+    # For debug only or when using Flask's built-in server. This variable sets
+    # the port that Flask will listen on, e.g. 5000, 5001, 8001, etc.
+    #
     logging.debug("Setting FLASK_PORT")
     try:
         app.config["FLASK_PORT"] = int(os.getenv(
@@ -69,26 +117,9 @@ def set_config(app=None):
     except ValueError:
         app.config["FLASK_PORT"] = 8001
 
-    logging.debug("Setting COWBULL_VERSION")
-    app.config["cowbull_version"] = "v0_1"
-    logging.debug("Setting COWBULL_VERSION --> {}".format(app.config["cowbull_version"]))
-
-    logging.debug("Setting COWBULL_URL")
-    app.config["cowbull_url"] = "http://{}:{}/{}".format(
-        app.config["cowbull_server"],
-        app.config["cowbull_port"],
-        app.config["cowbull_version"]
-    )
-    logging.debug("Setting COWBULL_URL --> {}".format(app.config["cowbull_url"]))
-
-    logging.debug("Setting COWBULL_MODES_URL")
-    app.config["cowbull_modes_url"] = "{}/modes".format(app.config["cowbull_url"])
-    logging.debug("Setting COWBULL_MODES_URL --> {}".format(app.config["cowbull_modes_url"]))
-
-    logging.debug("Setting COWBULL_GAME_URL")
-    app.config["cowbull_game_url"] = "{}/game".format(app.config["cowbull_url"])
-    logging.debug("Setting COWBULL_GAME_URL --> {}".format(app.config["cowbull_game_url"]))
-
+    #
+    # Dump the env vars to the log
+    #
     logging.debug("COWBULL_SERVER    : {}".format(app.config["cowbull_server"]))
     logging.debug("COWBULL_PORT      : {}".format(app.config["cowbull_port"]))
     logging.debug("COWBULL_VERSION   : {}".format(app.config["cowbull_version"]))
