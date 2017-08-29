@@ -122,9 +122,15 @@ li {
 }
 
 /* Inputs */
+.input_cell {
+    vertical-align: center;
+    padding-right: 10px;
+    font-size: large;
+}
+
 .digit {
     width: 30px;
-    font-size: large;
+    text-align: center;
 }
 
 .digit_output {

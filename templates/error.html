@@ -1,33 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap -->
-    <link href="{{ url_for('static', filename='bootstrap-3.3.7-dist/css/bootstrap.css') }}" rel="stylesheet" media="screen">
-    <link href="{{ url_for('static', filename='css/cowbull.css') }}?v=0.1.3" rel="stylesheet" media="screen">
+{% extends "base_template.html" %}
+{% block title %}CowBull SPA - Unresponsive :( {% endblock %}
+
+{% block header %}
     <title>CowBull - Unresponsive :( </title>
-</head>
-<body>
-    <div id="container">
-        <script src="https://code.jquery.com/jquery.js"></script>
-        <script src="{{ url_for('static', filename='bootstrap-3.3.7-dist/js/bootstrap.min.js') }}"></script>
-        <header id="header">
-            <h2 class="display-3">CowBull, a guessing game</h2>
-        </header>
-        <nav id="controls" class="navbar navbar-dark bg-primary">
-            <form method="post" class="form-inline">
-                <span class="navbar-brand">CowBull: </span>
-                {% for mode in modes_table %}
-                    <span class="nav_button btn btn-primary my-2 my-sm-0">{{mode.mode}}</span>
-                {% endfor %}
-            </form>
-        </nav>
-        <div id="game_container">
-            <p class="lead"><strong>Sorry, there's been a problem connecting to the game!</strong></p>
-            <p>Debug information: {{error_message}}</p>
-            <p>Please accept our apologies and try again soon simply by refreshing the page.</p>
-        </div>
-        <footer id="footer">{% block footer %}{% endblock %}</footer>
-    </div>
-</body>
-</html>
+{% endblock %}
+
+{% block instructions %}{% endblock %}
+{% block game %}
+    <p class="lead"><strong>Sorry, there's been a problem connecting to the game!</strong></p>
+    <p>Debug information: {{error_message}}</p>
+    <p>Please accept our apologies and try again soon simply by refreshing the page.</p>
+{% endblock %}

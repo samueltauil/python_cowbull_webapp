@@ -21,30 +21,31 @@
         </span>
     </p>
     <form>
-        &nbsp;
-        {% for i in range(digits) %}
-            <input id="digit_{{i}}"
-                   class="digit"
-                   required="required"
-                   name="digit_{{i}}_name"
-                   type="text"
-                   width="2"
-                   value="{{i}}"
-                   onblur="validateDigit(this);"
-            > &nbsp;
-        {% endfor %}
-        <script type="text/javascript">
-            for (i = 0; i < g_guesses; i++) {
-                var digit = document.getElementById('digit_'+i);
-    /*            digit.addEventListener("blur", validateDigit); */
-            }
-        </script>
-        <input type="button"
-               class="btn btn-primary my-2 my-sm-0"
-               value="Make a guess"
-               onclick="makeGuess();"
-        >
-        &nbsp;
+        <table>
+            <tr>
+                <td class="input_cell">Guesses:</td>
+                {% for i in range(digits) %}
+                    <td class="input_cell">
+                        <input id="digit_{{i}}"
+                               class="digit"
+                               required="required"
+                               name="digit_{{i}}_name"
+                               type="text"
+                               width="2"
+                               value="{{i}}"
+                               onblur="validateDigit(this);"
+                        >
+                    </td>
+                {% endfor %}
+                <td class="input_cell">
+                    <input type="button"
+                           class="btn btn-primary my-2 my-sm-0"
+                           value="Make a guess"
+                           onclick="makeGuess();"
+                    >
+                </td>
+            </tr>
+        </table>
         <span id="error_status"></span>
     </form>
     <hr>
