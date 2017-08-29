@@ -21,6 +21,10 @@ class GameSPA(MethodView):
             r = requests.get(url=cowbull_url)
         except exceptions.ConnectionError as re:
             error_message = "Game is unavailable: {}.".format(str(re))
+            return render_template(
+                "error.html",
+                error_message=error_message
+            )
 
         if r is not None:
             if r.status_code != 200:
