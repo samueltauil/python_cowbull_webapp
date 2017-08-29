@@ -28,8 +28,9 @@ class GameSPA(MethodView):
 
         if r is not None:
             if r.status_code != 200:
+                error_message = "Game is unavailable. Status code {}".format(r.status_code)
                 table = [{
-                    "mode": "Game is unavailable. Status code {}".format(r.status_code),
+                    "mode": error_message,
                     "digits": "n/a", "guesses": "n/a"
                 }]
                 return render_template(
