@@ -8,7 +8,7 @@ handlers:
   script: app.app
 
 env_variables:
-  COWBULL_SERVER: "scowbull-test-project.appspot.com"
+  COWBULL_SERVER: "cowbull-test-project.appspot.com"
   OLDCOWBULL_SERVER: 'cowbull-test-project.appspot.com'
   COWBULL_PORT: 80
   LOGGING_LEVEL: 10
