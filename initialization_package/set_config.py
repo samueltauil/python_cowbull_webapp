@@ -28,9 +28,9 @@ def set_config(app=None):
     # Google App Environment configuration
     logging.debug("Setting COWBULL_SERVER")
     cowbull_server = os.getenv(
-        "cowbull_host",
+        "cowbull_server",
         os.getenv(
-            "COWBULL_HOST",
+            "COWBULL_SERVER",
             "localhost"
         )
     )
