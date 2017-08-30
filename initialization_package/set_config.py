@@ -29,6 +29,20 @@ def set_config(app=None):
     )
 
     #
+    # Set the protocol for http(s).
+    #
+    logging.debug("Setting COWBULL_PROTOCOL")
+    cowbull_protocol = os.getenv(
+        "cowbull_protocol",
+        os.getenv(
+            "COWBULL_PROTOCOL",
+            "http"
+        )
+    )
+    app.config["cowbull_protocol"] = cowbull_protocol
+    logging.debug("Setting COWBULL_PROTOCOL --> {}".format(app.config["cowbull_protocol"]))
+
+    #
     # Set the server where the CowBull game is being accessed.
     #
     logging.debug("Setting COWBULL_SERVER")
@@ -67,7 +81,8 @@ def set_config(app=None):
     # Set the full URL for the server
     #
     logging.debug("Setting COWBULL_URL")
-    app.config["cowbull_url"] = "http://{}:{}/{}".format(
+    app.config["cowbull_url"] = "{}://{}:{}/{}".format(
+        app.config["cowbull_protocol"],
         app.config["cowbull_server"],
         app.config["cowbull_port"],
         app.config["cowbull_version"]
@@ -120,6 +135,7 @@ def set_config(app=None):
     #
     # Dump the env vars to the log
     #
+    logging.debug("COWBULL_PROTOCOL  : {}".format(app.config["cowbull_protocol"]))
     logging.debug("COWBULL_SERVER    : {}".format(app.config["cowbull_server"]))
     logging.debug("COWBULL_PORT      : {}".format(app.config["cowbull_port"]))
     logging.debug("COWBULL_VERSION   : {}".format(app.config["cowbull_version"]))
