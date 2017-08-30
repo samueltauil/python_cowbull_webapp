@@ -7,6 +7,10 @@ handlers:
 - url: /.*
   script: app.app
 
+skip_files:
+  - vendor/docker/
+  - vendor/kubernetes/
+
 env_variables:
   COWBULL_SERVER: "cowbull-test-project.appspot.com"
   COWBULL_PORT: 80
