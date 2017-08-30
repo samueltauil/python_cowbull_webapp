@@ -80,6 +80,7 @@ function makeGuess() {
                 play_status.innerHTML = json_response.exception;
             }
             else {
+                play_status.innerHTML = "An error occurred: " + this.responseText;
                 console.log('An error occurred: ' + this.responseText);
             }
         }
