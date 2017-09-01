@@ -9,7 +9,6 @@
         g_try = 0;
         g_key = "{{key}}";
     </script>
-<!--    <script src="{{ url_for('static', filename='js/validateDigit.js') }}?v=0.4"></script> -->
     <script src="{{ url_for('static', filename='js/makeGuess.js') }}?v=0.15"></script>
 {% endblock %}
 
@@ -33,7 +32,6 @@
                                type="text"
                                width="2"
                                value="{{i}}"
-                               onblur="validateDigit(this);"
                         >
                     </td>
                 {% endfor %}
