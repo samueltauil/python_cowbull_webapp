@@ -86,24 +86,6 @@
         <td class="col2">{{modes_notes}}</td>
     </tr>
 </table>
-<table class="instruction_table">
-    <tr>
-        <td class="col1">Guesses</td>
-        <td class="col2">{{guesses}}</td>
-    </tr>
-    <tr>
-        <td class="col1">Digits</td>
-        <td class="col2">{{digits}}</td>
-    </tr>
-    <tr>
-        <td class="col1">Server</td>
-        <td class="col2">{{served_by}}</td>
-    </tr>
-    <tr>
-        <td class="col1">Key</td>
-        <td class="col2">{{key}}</td>
-    </tr>
-</table>
 <p>
     When you are ready, choose 'Make a guess'. Your guesses will then be
     highlighted as follows:
@@ -132,6 +114,17 @@
     <tr>
         <td class="col1 miss cow multiple">Cow</td>
         <td class="col2">Cow (more than one)</td>
+    </tr>
+</table>
+<hr/>
+<table class="instruction_table">
+    <tr>
+        <td class="col1">Server</td>
+        <td class="col2">{{served_by}}</td>
+    </tr>
+    <tr>
+        <td class="col1">Key</td>
+        <td class="col2">{{key}}</td>
     </tr>
 </table>
 {% endblock%}
