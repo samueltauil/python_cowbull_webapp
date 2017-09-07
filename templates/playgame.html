@@ -78,6 +78,16 @@
 {% block instructions %}
 <table class="instruction_table">
     <tr>
+        <td class="col1">Instructions</td>
+        <td class="col2">{{modes_instructions}}</td>
+    </tr>
+    <tr>
+        <td class="col1">Guide</td>
+        <td class="col2">{{modes_notes}}</td>
+    </tr>
+</table>
+<table class="instruction_table">
+    <tr>
         <td class="col1">Guesses</td>
         <td class="col2">{{guesses}}</td>
     </tr>
@@ -94,12 +104,6 @@
         <td class="col2">{{key}}</td>
     </tr>
 </table>
-<p>
-    <strong>Instructions: </strong>{{modes_instructions}}
-</p>
-<p>
-    <em>Help: </em>{{modes_notes}}
-</p>
 <p>
     When you are ready, choose 'Make a guess'. Your guesses will then be
     highlighted as follows:
