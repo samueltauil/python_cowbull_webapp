@@ -107,7 +107,6 @@ class GameSPA(MethodView):
         try:
             modes_data = r.json()
             logging.debug("JSON extracted is: {}".format(modes_data))
-            app.config["mode_table"] = modes_data
         except Exception as e: # Blanket catch-all as this should never occur.
             logging.debug("Exception: {}".format(repr(e)))
             error_message = "The game is unavailable: {}.".format(repr(e))
@@ -120,6 +119,8 @@ class GameSPA(MethodView):
 
         return_state = True
         return_data = modes_data
+
+        app.config["modes_data"] = modes_data
 
         return return_state, return_data
 
@@ -183,7 +184,13 @@ class GameSPA(MethodView):
 
         # Get the modes_table from the app config; if it is stale ([]), then it will
         # be refreshed using _fetch_modes.
-        modes_table = app.config.get("mode_table", self._fetch_modes())
+        modes_data = app.config.get("modes_data", None)
+        if modes_data is None:
+            valid, modes_data = self._fetch_modes()
+            if not valid:
+                return modes_data
+
+        modes_table = modes_data["modes"]
 
         # Set the request response to None so it can be caught later.
         r = None
@@ -250,7 +257,9 @@ class GameSPA(MethodView):
             guesses=game_object.get("guesses", None),
             key=game_object.get("key", None),
             served_by=game_object.get("served-by", "None"),
-            modes_table=modes_table
+            modes_table=modes_table,
+            modes_notes = game_object.get("help-text", ""),
+            modes_instructions = game_object.get("instruction-text", "")
         )
 
         return return_template

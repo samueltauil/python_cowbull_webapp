@@ -6,13 +6,10 @@
 
 {% block instructions %}
 <p>
-    Welcome to the CowBull game. The objective of this game is to guess
-    a set of digits by entering a sequence of numbers. Each time you try
-    to guess, you will see an analysis of your guesses and be given a
-    number of tries to win. Choose a mode to execute.
+    {{modes_instructions}}
 </p>
 <p>
-    The game server providing this game ({{gameserver}}) offers the following modes:
+    {{modes_notes}}<br>The following game modes are offered:
 </p>
 <p>
     <ul>
