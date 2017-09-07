@@ -78,12 +78,24 @@
 {% block instructions %}
 <table class="instruction_table">
     <tr>
-        <td class="col1">Instructions</td>
-        <td class="col2">{{modes_instructions}}</td>
+        <td class="col1">Mode</td>
+        <td class="col2">{{mode_name}}</td>
     </tr>
     <tr>
-        <td class="col1">Guide</td>
-        <td class="col2">{{modes_notes}}</td>
+        <td class="col1">Instructions</td>
+        <td class="col2">{{mode_instructions}}</td>
+    </tr>
+    <tr>
+        <td class="col1">Help</td>
+        <td class="col2">{{mode_help}}</td>
+    </tr>
+    <tr>
+        <td class="col1">Served By</td>
+        <td class="col2">{{served_by}}</td>
+    </tr>
+    <tr>
+        <td class="col1">Game Key</td>
+        <td class="col2">{{key}}</td>
     </tr>
 </table>
 <p>
@@ -117,16 +129,6 @@
     </tr>
 </table>
 <hr/>
-<table class="instruction_table">
-    <tr>
-        <td class="col1">Server</td>
-        <td class="col2">{{served_by}}</td>
-    </tr>
-    <tr>
-        <td class="col1">Key</td>
-        <td class="col2">{{key}}</td>
-    </tr>
-</table>
 {% endblock%}
 
 {% block footer %}

@@ -258,8 +258,9 @@ class GameSPA(MethodView):
             key=game_object.get("key", None),
             served_by=game_object.get("served-by", "None"),
             modes_table=modes_table,
-            modes_notes = game_object.get("help-text", ""),
-            modes_instructions = game_object.get("instruction-text", "")
+            mode_name=game_object.get("mode", ""),
+            mode_help=game_object.get("help-text", ""),
+            mode_instructions=game_object.get("instruction-text", "")
         )
 
         return return_template
