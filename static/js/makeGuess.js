@@ -8,12 +8,12 @@ function analyzeGuess(json_response) {
     var bulls = outcome.bulls;
 
     if (status == "won" || status == "lost") {
-        play_status.innerHTML = outcome.message;
+        play_status.innerHTML = outcome.status;
         if (analysis == undefined || analysis == '') {
             return;
         }
     } else {
-        play_status.innerHTML = "You have " + bulls + " bull(s) and " + cows + " cow(s).";
+        play_status.innerHTML = outcome.status;
     }
 
     for (var i = 0; i < g_digits; i++) {
