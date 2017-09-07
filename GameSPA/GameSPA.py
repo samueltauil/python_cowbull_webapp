@@ -105,9 +105,9 @@ class GameSPA(MethodView):
         #
         logging.debug("Extracting JSON from the GET request")
         try:
-            modes_table = r.json()
-            logging.debug("JSON extracted is: {}".format(modes_table))
-            app.config["mode_table"] = modes_table
+            modes_data = r.json()
+            logging.debug("JSON extracted is: {}".format(modes_data))
+            app.config["mode_table"] = modes_data
         except Exception as e: # Blanket catch-all as this should never occur.
             logging.debug("Exception: {}".format(repr(e)))
             error_message = "The game is unavailable: {}.".format(repr(e))
@@ -119,7 +119,7 @@ class GameSPA(MethodView):
             return return_state, return_data
 
         return_state = True
-        return_data = modes_table
+        return_data = modes_data
 
         return return_state, return_data
 
@@ -142,9 +142,13 @@ class GameSPA(MethodView):
         # not set valid to True, then the modes_table variable will be set to a
         # rendered error.html page and should be returned to the caller.
         #
-        valid, modes_table = self._fetch_modes()
+        valid, modes_data = self._fetch_modes()
         if not valid:
-            return modes_table
+            return modes_data
+
+        modes_table = modes_data["modes"]
+        modes_instructions = modes_data["instructions"]
+        modes_notes = modes_data["notes"]
 
         # Render the index.html template
         logging.debug("Rendering index.html template.")
@@ -153,6 +157,8 @@ class GameSPA(MethodView):
             digits=0,
             guesses=0,
             modes_table=modes_table,
+            modes_instructions=modes_instructions,
+            modes_notes=modes_notes,
             gameserver=app.config.get('cowbull_url', None)
         )
 
