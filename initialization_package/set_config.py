@@ -74,7 +74,14 @@ def set_config(app=None):
     # Set the version of the game the CowBull server expects
     #
     logging.debug("Setting COWBULL_VERSION")
-    app.config["cowbull_version"] = "v0_1"
+    cowbull_version = os.getenv(
+        "cowbull_version",
+        os.getenv(
+            "COWBULL_VERSION",
+            "v0_1"
+        )
+    )
+    app.config["cowbull_version"] = cowbull_version
     logging.debug("Setting COWBULL_VERSION --> {}".format(app.config["cowbull_version"]))
 
     #
