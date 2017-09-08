@@ -226,7 +226,7 @@ class GameSPA(MethodView):
 
         if r.status_code != 200:
             logging.debug(
-                "The game request failed! Status code = {}, raw result = {}".format(r.status_code, r.raw)
+                "The game request failed! Status code = {}, raw result = {}".format(r.status_code, r.text)
             )
             return render_template(
                 "error.html",
