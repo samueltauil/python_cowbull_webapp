@@ -78,7 +78,7 @@ def set_config(app=None):
         "cowbull_version",
         os.getenv(
             "COWBULL_VERSION",
-            "v0_1"
+            "v1"
         )
     )
     app.config["cowbull_version"] = cowbull_version
