@@ -10,11 +10,11 @@ spec:
   selector:
     app: webapp
     tier: webappFrontend
-  type: NodePort
   ports:
-    - port: 8080
+    - protocol: TCP
       targetPort: 8080
-      nodePort: 32000
+      port: 8080
+  type: LoadBalancer
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -39,9 +39,9 @@ spec:
         env:
         - name: LOGGING_LEVEL
           value: "10"
-        - name: COWBULL_HOST
-          value: "http://cowbull-svc"
+        - name: COWBULL_SERVER
+          value: "cowbull-svc"
         - name: COWBULL_PORT
-          value: "5000"
+          value: "8080"
         ports:
         - containerPort: 8080
