@@ -87,7 +87,7 @@ function makeGuess() {
         }
     };
 
-    xhttp.open("PUT", '/', true)
+    xhttp.open("PUT", window.location.href, true)
     xhttp.setRequestHeader("Content-Type", "application/json")
     xhttp.send(JSON.stringify(params), "json")
 }

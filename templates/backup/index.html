@@ -1,0 +1,40 @@
+{% extends "base_template.html" %}
+{% block title %}CowBull SPA{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block instructions %}
+<p>
+    <strong>Instructions: </strong>{{modes_instructions}}
+</p>
+<p>
+    <em>Additional: </em>{{modes_notes}}
+</p>
+<p>
+    The following game modes are offered:
+    <ul>
+        {% for mode in modes_table %}
+        <li><strong>{{mode.mode}}: </strong> {{mode.digits}} digits with {{mode.guesses}} guesses</li>
+        {% endfor %}
+    </ul>
+</p>
+{% endblock %}
+
+{% block game %}
+<div id="game" class="jumbotron jumbotron-fluid game_off">
+    <h3>
+        Welcome to the game!
+    </h3>
+    <p>
+        This is your game area. Start a game by choosing one of the
+        modes above (provided by the game server {{gameserver}}); during a game,
+        simply press one of the mode buttons to start a new game.
+    </p>
+    <p>Good luck!</p>
+</div>
+{% endblock %}
+
+{% block footer %}
+<p><strong>CowBull version 0.1</strong></p>
+{% endblock %}

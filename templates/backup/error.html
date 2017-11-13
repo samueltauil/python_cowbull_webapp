@@ -1,0 +1,13 @@
+{% extends "base_template.html" %}
+{% block title %}CowBull SPA - Unresponsive :( {% endblock %}
+
+{% block header %}
+    <title>CowBull - Unresponsive :( </title>
+{% endblock %}
+
+{% block instructions %}{% endblock %}
+{% block game %}
+    <p class="lead"><strong>Sorry, there's been a problem connecting to the game!</strong></p>
+    <p>Debug information: {{error_message}}</p>
+    <p>Please accept our apologies and try again soon simply by refreshing the page.</p>
+{% endblock %}
