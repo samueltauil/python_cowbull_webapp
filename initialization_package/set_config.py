@@ -122,7 +122,7 @@ def set_config(app=None):
         )
     )
     app.config["environment"] = environment
-    logging.debug("Setting environment --> {}".format(app.config["environment"]))
+    logging.debug("Setting ENVIRONMENT --> {}".format(app.config["environment"]))
 
 
 
