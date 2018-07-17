@@ -111,6 +111,22 @@ def set_config(app=None):
     logging.debug("Setting COWBULL_GAME_URL --> {}".format(app.config["cowbull_game_url"]))
 
     #
+    # Set the environment
+    #
+    logging.debug("Setting ENVIRONMENT")
+    environment = os.getenv(
+        "cowbull_environment",
+        os.getenv(
+            "COWBULL_ENVIRONMENT",
+            "dev"
+        )
+    )
+    app.config["cowbull_version"] = cowbull_version
+    logging.debug("Setting COWBULL_VERSION --> {}".format(app.config["cowbull_version"]))
+
+
+
+    #
     # For debug only or when using Flask's built-in server. This variable sets
     # the host that Flask will listen on, e.g. 127.0.0.1, or 0.0.0.0.
     #

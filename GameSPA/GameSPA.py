@@ -160,6 +160,7 @@ class GameSPA(MethodView):
             modes_table=modes_table,
             modes_instructions=modes_instructions,
             modes_notes=modes_notes,
+            environment=app.config.get('environment', 'dev'),
             gameserver=app.config.get('cowbull_url', None)
         )
 
@@ -256,6 +257,7 @@ class GameSPA(MethodView):
             digits=game_object.get("digits", None),
             guesses=game_object.get("guesses", None),
             key=game_object.get("key", None),
+            environment=app.config.get('environment', 'dev'),
             served_by=game_object.get("served-by", "None"),
             modes_table=modes_table,
             mode_name=game_object.get("mode", ""),
