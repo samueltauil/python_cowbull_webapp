@@ -121,8 +121,8 @@ def set_config(app=None):
             "dev"
         )
     )
-    app.config["cowbull_version"] = cowbull_version
-    logging.debug("Setting COWBULL_VERSION --> {}".format(app.config["cowbull_version"]))
+    app.config["environment"] = environment
+    logging.debug("Setting environment --> {}".format(app.config["environment"]))
 
 
 
