@@ -15,7 +15,7 @@
             {% block header %}{% endblock %}
             <h2 class="display-3">CowBull, a guessing game</h2>
         </header>
-        <nav id="controls" class="navbar navbar-dark bg-primary">
+        <nav id="controls" class="navbar navbar-dark {{navbar_colour}}">
             <form method="post" class="form-inline">
                 <span class="navbar-brand">CowBull: </span>
                 {% for mode in modes_table %}

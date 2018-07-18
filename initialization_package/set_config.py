@@ -124,6 +124,20 @@ def set_config(app=None):
     app.config["environment"] = environment
     logging.debug("Setting ENVIRONMENT --> {}".format(app.config["environment"]))
 
+    #
+    # Set the environment
+    #
+    logging.debug("Setting NAVBAR_COLOUR")
+    environment = os.getenv(
+        "navbar_colour",
+        os.getenv(
+            "NAVBAR_COLOUR",
+            "bg-primary"
+        )
+    )
+    app.config["navbar_colour"] = environment
+    logging.debug("Setting NAVBAR_COLOUR --> {}".format(app.config["navbar_colour"]))
+
 
 
     #
@@ -165,5 +179,7 @@ def set_config(app=None):
     logging.debug("COWBULL_URL       : {}".format(app.config["cowbull_url"]))
     logging.debug("COWBULL_MODES_URL : {}".format(app.config["cowbull_modes_url"]))
     logging.debug("COWBULL_GAME_URL  : {}".format(app.config["cowbull_game_url"]))
+    logging.debug("NAVBAR_COLOR      : {}".format(app.config["navbar_colour"]))
+    logging.debug("ENVIRONMENT       : {}".format(app.config["environment"]))
     logging.debug("FLASK_HOST        : {}".format(app.config["FLASK_HOST"]))
     logging.debug("FLASK_PORT        : {}".format(app.config["FLASK_PORT"]))
