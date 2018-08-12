@@ -11,6 +11,7 @@ RUN		pip install -q -r /cowbull/requirements.txt
 USER		cowbull
 ENV		PYTHONPATH="/cowbull"
 COPY		GameSPA /cowbull/GameSPA/
+COPY        Health /cowbull/Health/
 COPY		templates /cowbull/templates/
 COPY		initialization_package /cowbull/initialization_package/
 COPY		static /cowbull/static/

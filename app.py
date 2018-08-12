@@ -1,4 +1,5 @@
 from GameSPA.GameSPA import GameSPA
+from Health.Health import Health
 from initialization_package import app
 from initialization_package.set_config import set_config
 
@@ -12,6 +13,15 @@ app.add_url_rule(
     '/',
     view_func=game_view,
     methods=["GET", "POST", "PUT"]
+)
+
+# Add a health view. The health view is actually contained within a class
+# based on a MethodView. See Health/Health.py
+health_view = Health.as_view('Health')
+app.add_url_rule(
+    '/health',
+    view_func=health_view,
+    methods=["GET"]
 )
 
 #
