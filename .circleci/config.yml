@@ -8,8 +8,8 @@ jobs:
     working_directory: ~/python_cowbull_webapp
 
     environment:
-      - COWBULL_SERVER='http://cowbull'
-      - COWBULL_PORT=5000
+      - COWBULL_SERVER='cowbull'
+      - COWBULL_PORT=8080
 
     steps:
       - checkout
@@ -27,13 +27,6 @@ jobs:
             . venv/bin/activate
             pip2 install -r requirements.txt
 
-      - run:
-          name: run unit tests
-          command: |
-            . venv/bin/activate
-            set -o pipefail
-            python -m unittest -v tests 2> >(tee -a /tmp/unittest-report.log >&2)
-
       - setup_remote_docker
 
       - run:
@@ -45,10 +38,11 @@ jobs:
             docker run --name cowbull -d dsanderscan/cowbull
             docker run --name test2 --link cowbull \
               -v /tmp:/tmp \
-              -e COWBULL_SERVER='http://cowbull' \
-              -e COWBULL_PORT=5000 \
-              -d dsanderscan/$IMAGE_NAME:$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM \
-              bash -c 'python -m unittest -v tests 2> >(tee -a /tmp/dockertest-report.log >&2)'
+              -e COWBULL_SERVER='cowbull' \
+              -e COWBULL_PORT=8080 \
+              -p 8080:8080 \
+              -d dsanderscan/$IMAGE_NAME:$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM
+            curl http://localhost:8080/health > >(tee -a /tmp/dockertest-report.log >&2)
             echo "Test results status: $?"
 
       - run:
