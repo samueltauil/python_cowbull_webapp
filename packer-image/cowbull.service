@@ -1,0 +1,11 @@
+[Unit]
+Description=Cowbull Web Application
+After=multi-user.target
+
+[Service]
+Type=idle
+EnvironmentFile=/websites/variables.conf
+ExecStart=/usr/bin/python /websites/python_cowbull_webapp/app.py > /var/log/cowbull.log
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,83 @@
+{
+  "variables": {
+    "client_id": "",
+    "client_secret": "",
+    "tenant_id": "",
+    "subscription_id": ""
+  },
+  "builders": [{
+    "type": "azure-arm",
+
+    "client_id": "{{user `client_id`}}",
+    "client_secret": "{{user `client_secret`}}",
+    "tenant_id": "{{user `tenant_id`}}",
+    "subscription_id": "{{user `subscription_id`}}",
+
+    "managed_image_resource_group_name": "RG-ENGINEERING",
+    "managed_image_name": "cowbull-webserver-ubuntu",
+
+    "os_type": "Linux",
+    "image_publisher": "Canonical",
+    "image_offer": "UbuntuServer",
+    "image_sku": "16.04-LTS",
+
+    "azure_tags": {
+        "tag_description": "Image Deployment",
+        "tag_billing": "Engineering",
+        "tag_environment": "dev"
+    },
+
+    "location": "East US",
+    "vm_size": "Standard_B1s"
+  }],
+  "provisioners": [{
+    "inline": [
+      "mkdir ~/websites",
+      "sudo mkdir /websites"
+    ],
+    "inline_shebang": "/bin/sh -x",
+    "type": "shell"
+    },
+    {
+      "destination": "~/websites/variables.conf",
+      "source": "./cowbull-variables.conf",
+      "type": "file"
+    },
+    {
+      "destination": "~/websites/cowbull-nginx.default",
+      "source": "./cowbull-nginx.default",
+      "type": "file"
+    },
+    {
+      "destination": "~/websites/cowbull.service",
+      "source": "./cowbull.service",
+      "type": "file"
+    },
+    {
+    "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E sh '{{ .Path }}'",
+    "inline": [
+      "sudo cp ~/websites/variables.conf /websites/",
+      "sudo cp ~/websites/cowbull.service /lib/systemd/system/cowbull.service",
+      "sudo chmod 0644 /websites/variables.conf",
+      "sudo chmod 0644 /lib/systemd/system/cowbull.service",
+      "apt-get update",
+      "apt-get upgrade -y",
+      "apt-get -y install nginx",
+      "apt-get -y install python-pip",
+      "apt-get -y install git",
+      "cd ~/websites",
+      "git clone https://github.com/dsandersAzure/python_cowbull_webapp.git",
+      "sudo -H pip install -r python_cowbull_webapp/requirements.txt",
+      "sudo cp -r python_cowbull_webapp /websites/",
+      "sudo cp ~/websites/cowbull-nginx.default /etc/nginx/sites-available/default",
+      "sudo systemctl restart nginx.service",
+      "sudo systemctl daemon-reload",
+      "sudo systemctl enable cowbull.service",
+      "sudo systemctl start cowbull.service",
+
+      "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
+    ],
+    "inline_shebang": "/bin/sh -x",
+    "type": "shell"
+  }]
+}
