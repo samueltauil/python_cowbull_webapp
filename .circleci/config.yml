@@ -42,7 +42,7 @@ jobs:
               -e COWBULL_PORT=8080 \
               -p 8080:8080 \
               -d dsanderscan/$IMAGE_NAME:$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM
-            curl http://localhost:8080/health > >(tee -a /tmp/dockertest-report.log >&2)
+            curl http://test2:8080/health > >(tee -a /tmp/dockertest-report.log >&2)
             echo "Test results status: $?"
 
       - run:
