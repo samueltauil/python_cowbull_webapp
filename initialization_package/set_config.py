@@ -9,7 +9,7 @@ def set_config(app=None):
     #
     # Expected OS Env Vars (lower case):
     # LOGGING_FORMAT --> Python logging fmt     !! Default: "%(asctime)s %(levelname)s: %(message)s"
-    # COWBULL_SERVER --> http://server_url      !! Note NO TRAILING /
+    # COWBULL_SERVER --> server_url             !! Note NO TRAILING /
     # COWBULL_PORT   --> 80                     !! Note integer
     # FLASK_HOST     --> 0.0.0.0                !! Only if using Flask to serve
     # FLASK_PORT     --> 5000                   !! "    "    "    "    "    "
