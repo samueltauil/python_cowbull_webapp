@@ -8,7 +8,8 @@ jobs:
     working_directory: ~/python_cowbull_webapp
 
     environment:
-      - PERSISTER: '{"engine_name": "redis", "parameters": {"host": "localhost", "port": 6379, "db": 0}}'
+      - COWBULL_SERVER='http://cowbull'
+      - COWBULL_PORT=5000
 
     steps:
       - checkout
