@@ -1,9 +1,13 @@
 {
   "variables": {
-    "client_id": "",
-    "client_secret": "",
-    "tenant_id": "",
-    "subscription_id": ""
+    "client_id": "{{env `client_id`}}",
+    "client_secret": "{{env `client_secret`}}",
+    "tenant_id": "{{env `tenant_id`}}",
+    "subscription_id": "{{env `subscription_id`}}",
+    "IMAGE_RG": "{{env `IMAGE_RG`}}",
+    "MAJOR_VERSION": "{{env `MAJOR_VERSION`}}",
+    "MINOR_VERSION": "{{env `MINOR_VERSION`}}",
+    "CIRCLE_BUILD_NUM": "{{env `CIRCLE_BUILD_NUM`}}"
   },
   "builders": [{
     "type": "azure-arm",
