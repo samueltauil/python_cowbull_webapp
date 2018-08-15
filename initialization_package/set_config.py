@@ -125,7 +125,7 @@ def set_config(app=None):
     logging.debug("Setting ENVIRONMENT --> {}".format(app.config["environment"]))
 
     #
-    # Set the environment
+    # Set the navbar colour
     #
     logging.debug("Setting NAVBAR_COLOUR")
     environment = os.getenv(
@@ -138,6 +138,20 @@ def set_config(app=None):
     app.config["navbar_colour"] = environment
     logging.debug("Setting NAVBAR_COLOUR --> {}".format(app.config["navbar_colour"]))
 
+
+    #
+    # Set the build number
+    #
+    logging.debug("Setting BUILD_NUMBER")
+    build_number = os.getenv(
+        "build_number",
+        os.getenv(
+            "build_number",
+            "unknown"
+        )
+    )
+    app.config["build_number"] = build_number
+    logging.debug("Setting build_number --> {}".format(app.config["build_number"]))
 
 
     #

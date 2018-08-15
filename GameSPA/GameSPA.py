@@ -161,6 +161,7 @@ class GameSPA(MethodView):
             modes_instructions=modes_instructions,
             modes_notes=modes_notes,
             navbar_colour=app.config.get('navbar_colour', 'bg-primary'),
+            build_number=app.config.get('build_number', 'unknown'),
             environment=app.config.get('environment', 'dev'),
             gameserver=app.config.get('cowbull_url', None)
         )
@@ -260,6 +261,7 @@ class GameSPA(MethodView):
             key=game_object.get("key", None),
             environment=app.config.get('environment', 'dev'),
             navbar_colour=app.config.get('navbar_colour', 'bg-primary'),
+            build_number=app.config.get('build_number', 'unknown'),
             served_by=game_object.get("served-by", "None"),
             modes_table=modes_table,
             mode_name=game_object.get("mode", ""),
