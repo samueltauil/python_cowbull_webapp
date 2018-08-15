@@ -8,13 +8,13 @@
   "builders": [{
     "type": "azure-arm",
 
-    "client_id": "{{env `client_id`}}",
-    "client_secret": "{{env `client_secret`}}",
-    "tenant_id": "{{env `tenant_id`}}",
-    "subscription_id": "{{env `subscription_id`}}",
+    "client_id": "{{user `client_id`}}",
+    "client_secret": "{{user `client_secret`}}",
+    "tenant_id": "{{user `tenant_id`}}",
+    "subscription_id": "{{user `subscription_id`}}",
 
-    "managed_image_resource_group_name": "{{env `IMAGE_RG`}}",
-    "managed_image_name": "cowbull-webserver-ubuntu-{{env `MAJOR_VERSION`}}-{{env `MINOR_VERSION`}}-{{env `CIRCLE_BUILD_NUM`}}",
+    "managed_image_resource_group_name": "{{user `IMAGE_RG`}}",
+    "managed_image_name": "cowbull-webserver-ubuntu-{{user `MAJOR_VERSION`}}-{{user `MINOR_VERSION`}}-{{user `CIRCLE_BUILD_NUM`}}",
 
     "os_type": "Linux",
     "image_publisher": "Canonical",
