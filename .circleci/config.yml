@@ -55,6 +55,13 @@ jobs:
             docker tag dsanderscan/$IMAGE_NAME:$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM dsanderscan/$IMAGE_NAME:latest
             docker push dsanderscan/$IMAGE_NAME:$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM
             docker push dsanderscan/$IMAGE_NAME:latest
+
+      - run:
+          name: build gold image in Azure
+          command: |
+            cd packer-image
+            packer build -force cowbull-webserver.json
+
       - save_cache:
           key: v2-dependencies-{{ checksum "requirements.txt" }}
           paths:
