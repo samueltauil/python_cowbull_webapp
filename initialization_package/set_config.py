@@ -146,7 +146,7 @@ def set_config(app=None):
     build_number = os.getenv(
         "build_number",
         os.getenv(
-            "build_number",
+            "BUILD_NUMBER",
             "unknown"
         )
     )
