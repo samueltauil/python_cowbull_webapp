@@ -79,7 +79,7 @@ class Health(MethodView):
             )
 
         return Response(
-            response=json.dumps("Ready"),
+            response=json.dumps("Ready - Game server {} available".format(cowbull_url)),
             mimetype="application/json",
             status=200
         )
