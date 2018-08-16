@@ -18,13 +18,13 @@ def set_config(app=None):
     # Set the configuration for logging
     #
     logging.basicConfig(
-        level=os.getenv(
+        level=int(os.getenv(
             "logging_level",
             os.getenv(
                 "LOGGING_LEVEL",
                 logging.DEBUG
             )
-        ),
+        )),
         format=os.getenv(
             "logging_format",
             os.getenv(
