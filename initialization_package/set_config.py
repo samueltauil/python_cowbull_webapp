@@ -23,7 +23,8 @@ def set_config(app=None):
             os.getenv(
                 "LOGGING_LEVEL",
                 logging.DEBUG
-            ),
+            )
+        ),
         format=os.getenv(
             "logging_format",
             os.getenv(
