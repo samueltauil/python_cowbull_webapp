@@ -70,9 +70,5 @@ jobs:
             - ~/.m2
 
       - store_artifacts:
-          path: /tmp/health-output
-          destination: health-output
-
-      - store_artifacts:
-          path: /tmp/index-output
-          destination: index-output
+          path: /tmp/unittest-report.log
+          destination: unittest-report
