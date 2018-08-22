@@ -57,7 +57,7 @@ jobs:
             docker run --rm \
               -v /tmp:/tmp \
               --link test2 \
-              busybox sh -c "wget http://test2:8080/health; cat health > /tmp/health-output; echo"
+              busybox sh -c "wget -o /tmp/health-output http://test2:8080/health; cat /tmp/health-output; echo"
             grep "Ready - Game" /tmp/health-output
             echo "Test results status: $?"
 
