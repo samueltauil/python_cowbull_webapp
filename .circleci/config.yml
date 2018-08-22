@@ -46,17 +46,22 @@ jobs:
               -e "PERSISTER"='{"engine_name": "redis", "parameters": {"host": "redis", "port": 6379, "master_port": 26379, "db": 0}}' \
               -e LOGGING_LEVEL=10 \
               -d dsanderscan/cowbull:$cowbull_test_version
-            docker run --name test2 --link cowbull \
+            docker run --name test2 \
+              --link cowbull \
               -v /tmp:/tmp \
               -e COWBULL_SERVER='cowbull' \
               -e COWBULL_PORT=8080 \
+              -e LOGGING_LEVEL=10 \
               -p 8080:8080 \
               -d dsanderscan/$IMAGE_NAME:$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM
+            docker run --rm \
+              --link test2 \
+              busybox sh -c "wget http://test2:8080/health; cat health; echo"
             docker ps -a
             docker logs redis
             docker logs cowbull
             docker logs test2
-            curl http://localhost:8080/health > >(tee -a /tmp/dockertest-report.log >&2)
+#            curl http://0.0.0.0:8080/health > >(tee -a /tmp/dockertest-report.log >&2)
             echo "Test results status: $?"
 
       - run:
