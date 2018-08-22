@@ -61,7 +61,6 @@ jobs:
             docker logs redis
             docker logs cowbull
             docker logs test2
-#            curl http://0.0.0.0:8080/health > >(tee -a /tmp/dockertest-report.log >&2)
             echo "Test results status: $?"
 
       - run:
