@@ -9,7 +9,7 @@ WORKDIR	/cowbull
 COPY	requirements.txt /cowbull/
 RUN		pip install -q -r /cowbull/requirements.txt
 USER	cowbull
-ENV		PYTHONPATH="/cowbull"
+ENV		PYTHONPATH="/cowbull:/cowbull/tests"
 COPY	GameSPA /cowbull/GameSPA/
 COPY    Health /cowbull/Health/
 COPY	templates /cowbull/templates/
