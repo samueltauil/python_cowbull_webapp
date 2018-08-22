@@ -48,6 +48,8 @@ jobs:
               -e COWBULL_SERVER='cowbull' \
               -e COWBULL_PORT=8080 \
               -e LOGGING_LEVEL=10 \
+              -e COWBULL_ENVIRONMENT="CI/CD" \
+              -e BUILD_NUMBER="TEST-"$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM \
               -p 8080:8080 \
               -d dsanderscan/$IMAGE_NAME:$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM
             docker run --name busybox \
@@ -60,7 +62,7 @@ jobs:
             docker cp busybox:/tmp/health-output /tmp/health-output
             docker cp busybox:/tmp/index-output /tmp/index-output
             grep "Ready - Game" /tmp/health-output
-            echo "Test results status: $?"
+            grep "Easy: 3 digits with 6 guesses" /tmp/index-output
 
       - run:
           name: push docker image
