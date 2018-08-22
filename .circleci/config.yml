@@ -54,11 +54,11 @@ jobs:
               -e LOGGING_LEVEL=10 \
               -p 8080:8080 \
               -d dsanderscan/$IMAGE_NAME:$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM
-            docker run --rm \
-              --name busybox \
+            docker run --name busybox \
               -v /tmp:/tmp \
               --link test2 \
-              busybox sh -c "wget -O /tmp/health-output http://test2:8080/health; cat /tmp/health-output; echo; sleep 10"
+              -d busybox sh -c "wget -O /tmp/health-output http://test2:8080/health; cat /tmp/health-output; echo; sleep 100"
+            sleep 2
             docker cp busybox:/tmp/health-output /tmp/health-output
             grep "Ready - Game" /tmp/health-output
             echo "Test results status: $?"
