@@ -18,19 +18,35 @@ jobs:
       - setup_remote_docker
 
       - run:
-          name: build and test docker image
+          name: Docker login
           command: |
             docker login --username=$doclog --password=$docpass
+
+      - run:
+          name: build docker image
+          command: |
             docker build -f vendor/docker/Dockerfile -t dsanderscan/$IMAGE_NAME:$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM .
             set -o pipefail
+
+      - run:
+          name: run redis
+          command: |
             docker run --name redis \
               -d dsanderscan/python_cowbull_redis:$cowbull_redis_version \
               redis-server
+
+      - run:
+          name: run cowbull server
+          command: |
             docker run --name cowbull \
               --link redis \
               -e "PERSISTER"='{"engine_name": "redis", "parameters": {"host": "redis", "port": 6379, "master_port": 26379, "db": 0}}' \
               -e LOGGING_LEVEL=10 \
               -d dsanderscan/cowbull:$cowbull_test_version
+
+      - run:
+          name: run unit tests
+          command: |
             docker run --name test2 \
               --link cowbull \
               -v /tmp:/tmp \
