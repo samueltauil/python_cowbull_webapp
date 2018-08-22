@@ -53,7 +53,7 @@ jobs:
             docker run --name busybox \
               -v /tmp:/tmp \
               --link test2 \
-              -d busybox sh -c "wget -O /tmp/health-output http://test2:8080/health"
+              -d busybox sh -c "wget -O /tmp/health-output http://test2:8080/health; sleep 1000"
             sleep 2
             docker exec -t busybox sh -c "wget -O /tmp/index-output http://test2:8080/"
             sleep 2
