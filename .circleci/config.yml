@@ -52,7 +52,7 @@ jobs:
               -e BUILD_NUMBER="TEST-"$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM \
               -p 8080:8080 \
               -d dsanderscan/$IMAGE_NAME:$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM \
-              python -m unittest -v tests
+              "python -m unittest -v tests; sleep 10000"
             docker run --name busybox \
               -v /tmp:/tmp \
               --link test2 \
