@@ -5,16 +5,17 @@ RUN		apt-get update && \
 		mkdir /cowbull && \
 		useradd -r -G cowbull_wa -d /cowbull cowbull && \
 		chown cowbull /cowbull
-WORKDIR		/cowbull
-COPY		requirements.txt /cowbull/
+WORKDIR	/cowbull
+COPY	requirements.txt /cowbull/
 RUN		pip install -q -r /cowbull/requirements.txt
-USER		cowbull
+USER	cowbull
 ENV		PYTHONPATH="/cowbull"
-COPY		GameSPA /cowbull/GameSPA/
-COPY        Health /cowbull/Health/
-COPY		templates /cowbull/templates/
-COPY		initialization_package /cowbull/initialization_package/
-COPY		static /cowbull/static/
+COPY	GameSPA /cowbull/GameSPA/
+COPY    Health /cowbull/Health/
+COPY	templates /cowbull/templates/
+COPY	initialization_package /cowbull/initialization_package/
+COPY	static /cowbull/static/
+COPY 	tests /cowbull/tests/
 
 COPY        	app.py  /cowbull/
 COPY		__init__.py /cowbull/
