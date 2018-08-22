@@ -40,12 +40,12 @@ jobs:
           command: |
             docker run --name cowbull \
               --link redis \
-              -e "PERSISTER"='{"engine_name": "redis", "parameters": {"host": "redis", "port": 6379, "master_port": 26379, "db": 0}}' \
+              -e PERSISTER='{"engine_name": "redis", "parameters": {"host": "redis", "port": 6379, "master_port": 26379, "db": 0}}' \
               -e LOGGING_LEVEL=10 \
               -d dsanderscan/cowbull:$cowbull_test_version
 
       - run:
-          name: run unit tests
+          name: run cowbull webapp
           command: |
             docker run --name test2 \
               --link cowbull \
@@ -57,6 +57,10 @@ jobs:
               -e BUILD_NUMBER="TEST-"$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM \
               -p 8080:8080 \
               -d dsanderscan/$IMAGE_NAME:$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM
+
+      - run:
+          name: run unit tests
+          command: |
             docker exec -t test2 \
               bash -c "python -m unittest -v tests 2> >(tee -a /tmp/unittest-report.log >&2)"
             docker cp test2:/tmp/unittest-report.log /tmp/unittest-report.log
