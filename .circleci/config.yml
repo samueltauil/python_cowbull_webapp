@@ -51,18 +51,11 @@ jobs:
               -e COWBULL_ENVIRONMENT="CI/CD" \
               -e BUILD_NUMBER="TEST-"$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM \
               -p 8080:8080 \
-              -d dsanderscan/$IMAGE_NAME:$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM
-            docker run --name busybox \
-              -v /tmp:/tmp \
-              --link test2 \
-              -d busybox sh -c "wget -O /tmp/health-output http://test2:8080/health; sleep 1000"
-            sleep 2
-            docker exec -t busybox sh -c "wget -O /tmp/index-output http://test2:8080/"
-            sleep 2
-            docker cp busybox:/tmp/health-output /tmp/health-output
-            docker cp busybox:/tmp/index-output /tmp/index-output
-            grep "Ready - Game" /tmp/health-output
-            grep "TEST-"$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM /tmp/index-output
+              -d dsanderscan/$IMAGE_NAME:$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM \
+              python -m unittest -v tests 2> >(tee -a /tmp/unittest-report.log >&2); sleep 10000
+            docker cp test2:/tmp/unittest-report.log /tmp/unittest-report.log
+            docker stop test2
+            echo "Test results status: $?"
 
       - run:
           name: push docker image
