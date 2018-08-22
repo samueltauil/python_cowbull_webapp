@@ -62,7 +62,7 @@ jobs:
             docker cp busybox:/tmp/health-output /tmp/health-output
             docker cp busybox:/tmp/index-output /tmp/index-output
             grep "Ready - Game" /tmp/health-output
-            grep "Easy: 3 digits with 6 guesses" /tmp/index-output
+            grep "3 digits with 6 guesses" /tmp/index-output
 
       - run:
           name: push docker image
