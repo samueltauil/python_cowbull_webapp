@@ -3,7 +3,6 @@ jobs:
   build:
     docker:
       - image: circleci/python:2.7
-      - image: dsanderscan/cowbull
 
     working_directory: ~/python_cowbull_webapp
 
@@ -39,7 +38,14 @@ jobs:
             docker login --username=$doclog --password=$docpass
             docker build -f vendor/docker/Dockerfile -t dsanderscan/$IMAGE_NAME:$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM .
             set -o pipefail
-            docker run --name cowbull -d dsanderscan/cowbull
+            docker run --name redis \
+              -d dsanderscan/python_cowbull_redis:$cowbull_redis_version \
+              redis-server
+            docker run --name cowbull \
+              --link redis \
+              -e "PERSISTER"='{"engine_name": "redis", "parameters": {"host": "redis", "port": 6379, "master_port": 26379, "db": 0}}' \
+              -e LOGGING_LEVEL=10 \
+              -d dsanderscan/cowbull:$cowbull_test_version
             docker run --name test2 --link cowbull \
               -v /tmp:/tmp \
               -e COWBULL_SERVER='cowbull' \
