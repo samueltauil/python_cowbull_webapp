@@ -52,7 +52,7 @@ jobs:
               -e BUILD_NUMBER="TEST-"$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM \
               -p 8080:8080 \
               -d dsanderscan/$IMAGE_NAME:$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM \
-              python -m unittest -v tests 2> >(tee -a /tmp/unittest-report.log >&2); sleep 10000
+              python -m unittest -v tests 2> >(tee -a /tmp/unittest-report.log >&2); sleep 10
             docker cp test2:/tmp/unittest-report.log /tmp/unittest-report.log
             docker stop test2
             echo "Test results status: $?"
