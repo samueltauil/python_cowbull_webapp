@@ -54,7 +54,6 @@ jobs:
               -d dsanderscan/$IMAGE_NAME:$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM
             docker exec -t test2 \
               python -m unittest -v tests 2> >(tee -a /tmp/unittest-report.log >&2)
-            docker cp test2:/tmp/unittest-report.log /tmp/unittest-report.log
             echo "Test results status: $?"
 
       - run:
