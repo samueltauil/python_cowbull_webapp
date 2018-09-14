@@ -9,8 +9,8 @@ pipeline {
     }
     stages {
         stage('Build') { 
+            def testImage = docker.build("test-image", "./vendor/docker")
             steps {
-                def testImage = docker.build("test-image", "./vendor/docker")
                 echo "Starting steps"
                 sh 'pip install -r requirements.txt'
                 sh 'ls'
