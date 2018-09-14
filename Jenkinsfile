@@ -3,12 +3,12 @@ pipeline {
         docker {
             image 'python:latest' 
         }
+        def testImage = docker.build("test-image", "./vendor/docker")
     }
     environment {
         PYTHONPATH="tests"
     }
     stages {
-        def testImage = docker.build("test-image", "./vendor/docker")
         stage('Build') { 
             steps {
                 echo "Starting steps"
