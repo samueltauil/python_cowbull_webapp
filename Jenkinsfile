@@ -8,8 +8,8 @@ pipeline {
         stage('Build') { 
             steps {
                 echo "Starting steps"
-                pwd
-                ls
+                sh 'pwd'
+                sh 'ls'
                 sh 'python -m unittest -v tests'
                 echo "Finished steps"
             }
