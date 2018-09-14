@@ -7,13 +7,11 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                sh 'pwd'
-            }
-            steps {
-                sh 'ls'
-            }
-            steps {
+                echo "Starting steps"
+                pwd
+                ls
                 sh 'python -m unittest -v tests'
+                echo "Finished steps"
             }
         }
     }
