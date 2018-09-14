@@ -1,7 +1,4 @@
 pipeline {
-    python {
-        def testImage = docker.build("test-image", "./vendor/docker")
-    }
     agent {
         docker {
             image 'python:latest' 
@@ -13,6 +10,9 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
+                script {
+                    def testImage = docker.build("test-image", "./vendor/docker")
+                }
                 echo "Starting steps"
                 sh 'pip install -r requirements.txt'
                 sh 'ls'
