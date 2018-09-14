@@ -1,9 +1,11 @@
 pipeline {
+    python {
+        def testImage = docker.build("test-image", "./vendor/docker")
+    }
     agent {
         docker {
             image 'python:latest' 
         }
-        def testImage = docker.build("test-image", "./vendor/docker")
     }
     environment {
         PYTHONPATH="tests"
