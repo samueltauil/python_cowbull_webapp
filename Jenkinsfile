@@ -4,6 +4,9 @@ pipeline {
             image 'python:latest' 
         }
     }
+    environment {
+        PYTHONPATH="tests"
+    }
     stages {
         stage('Build') { 
             steps {
