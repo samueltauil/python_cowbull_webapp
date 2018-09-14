@@ -1,10 +1,15 @@
 pipeline {
     agent any
     stages {
-        stage('build') {
+        stage('test') {
             steps {
-                sh 'python --version'
+                sh 'python -m unittest -v tests 2> >(tee -a /tmp/unittest-report.log >&2)'
             }
+        }
+    }
+    post {
+        always {
+            junit '/tmp/unittest-report*.log'
         }
     }
 }
