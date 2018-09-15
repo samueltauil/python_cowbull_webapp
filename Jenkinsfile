@@ -9,6 +9,6 @@ node {
         checkout scm
     }
     stage('build') {
-        sh 'docker-compose -f docker-compose-jenkins.yml build'
+        sh '/usr/local/bin/docker-compose -f docker-compose-jenkins.yml build'
     }
 }
