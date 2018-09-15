@@ -1,19 +1,12 @@
-pipeline {
-    agent any
-    environment {
-        PYTHONPATH="tests"
+node {
+    stage('Initialize') {
+        env.PYTHONPATH="tests"
     }
-    stages {
-        stage('Build') { 
-            steps {
-                step(
-                    [
-                        $class: 'DockerComposeBuilder', 
-                        dockerComposeFile: 'docker-compose-jenkins.yml', 
-                        option: [$class: 'StartAllServices'], 
-                        useCustomDockerComposeFile: true]
-                    )
-            }
-        }
+
+    stage('checkout') {
+        checkout scm
+    }
+    stage('build') {
+        sh 'docker-compose -f docker-compose-jenkins.yml build'
     }
 }
