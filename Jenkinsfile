@@ -10,6 +10,13 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
+                step(
+                    [
+                        $class: 'DockerComposeBuilder', 
+                        dockerComposeFile: 'docker-compose-jenkins.yml', 
+                        option: [$class: 'StartAllServices'], 
+                        useCustomDockerComposeFile: true]
+                    )
                 script {
                     def testImage = docker.build("test-image", "./vendor/docker")
                 }
