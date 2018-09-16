@@ -28,6 +28,8 @@ services:
       - COWBULL_SERVER=cowbull_svc
       - COWBULL_PORT=8080
       - COWBULL_VERSION=v1
+      - BUILD_NUMBER=${BUILD_NUMBER}
+      - COWBULL_ENVIRONMENT=${COWBULL_ENVIRONMENT}
     networks:
       - cowbull_network
 networks:

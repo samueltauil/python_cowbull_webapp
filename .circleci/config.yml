@@ -24,6 +24,9 @@ jobs:
 
       - run:
           name: Docker up
+          environment:
+            BUILD_NUMBER: $IMAGE_NAME:$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM
+            COWBULL_ENVIRONMENT: "CircleCI"
           command: |
             set -o pipefail
             docker-compose -f vendor/docker/docker-compose.yml up -d
