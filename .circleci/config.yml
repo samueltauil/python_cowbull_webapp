@@ -33,10 +33,15 @@ jobs:
           command: |
             docker exec -t docker_cowbull_webapp_1 \
               bash -c "python -m unittest -v tests 2> >(tee -a /tmp/unittest-report.log >&2)"
-            docker cp test2:/tmp/unittest-report.log /tmp/unittest-report.log
+            docker cp docker_cowbull_webapp_1:/tmp/unittest-report.log /tmp/unittest-report.log
             echo "Test results status: $?"
 
       - run:
+          name: Build final Docker image
+          command: |
+            docker build -f vendor/docker/Dockerfile -t dsanderscan/$IMAGE_NAME:$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM .
+
+      - deploy:
           name: push docker image
           command: |
             docker tag dsanderscan/$IMAGE_NAME:$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM dsanderscan/$IMAGE_NAME:latest
