@@ -31,7 +31,7 @@ jobs:
       - run:
           name: run unit tests
           command: |
-            docker exec -t cowbull_webapp \
+            docker exec -t docker_cowbull_webapp_1 \
               bash -c "python -m unittest -v tests 2> >(tee -a /tmp/unittest-report.log >&2)"
             docker cp test2:/tmp/unittest-report.log /tmp/unittest-report.log
             echo "Test results status: $?"
