@@ -61,3 +61,6 @@ jobs:
       - store_artifacts:
           path: /tmp/unittest-report.log
           destination: unittest-report
+
+      - store_test_results:
+          path: /tmp/unittest-report.log
