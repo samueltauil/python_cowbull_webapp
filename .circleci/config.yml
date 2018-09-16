@@ -29,7 +29,7 @@ jobs:
             docker-compose -f vendor/docker/docker-compose.yml up -d
 
       - run:
-          name: run unit tests
+          name: Run unit tests
           command: |
             docker exec -t docker_cowbull_webapp_1 \
               bash -c "python -m unittest -v tests 2> >(tee -a /tmp/unittest-report.log >&2)"
@@ -42,7 +42,7 @@ jobs:
             docker build -f vendor/docker/Dockerfile -t dsanderscan/$IMAGE_NAME:$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM .
 
       - deploy:
-          name: push docker image
+          name: Push docker image
           command: |
             docker tag dsanderscan/$IMAGE_NAME:$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM dsanderscan/$IMAGE_NAME:latest
             docker push dsanderscan/$IMAGE_NAME:$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM
