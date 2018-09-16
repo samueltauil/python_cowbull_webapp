@@ -17,7 +17,9 @@ services:
       - cowbull_network
     restart: always
   cowbull_webapp:
-    image: 'dsanderscan/cowbull_webapp'
+    build:
+      context: ../../
+      dockerfile: vendor/docker/Dockerfile
     depends_on:
       - cowbull_svc
     ports:

@@ -23,15 +23,45 @@ jobs:
             docker login --username=$doclog --password=$docpass
 
       - run:
-          name: Docker up
+          name: build docker image
           command: |
+            docker build -f vendor/docker/Dockerfile -t dsanderscan/$IMAGE_NAME:$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM .
             set -o pipefail
-            docker-compose -f vendor/docker/docker-compose-test.yml up -d
+
+      - run:
+          name: run redis
+          command: |
+            docker run --name redis \
+              -d dsanderscan/python_cowbull_redis:$cowbull_redis_version \
+              redis-server
+
+      - run:
+          name: run cowbull server
+          command: |
+            docker run --name cowbull \
+              --link redis \
+              -e PERSISTER='{"engine_name": "redis", "parameters": {"host": "redis", "port": 6379, "master_port": 26379, "db": 0}}' \
+              -e LOGGING_LEVEL=10 \
+              -d dsanderscan/cowbull:$cowbull_test_version
+
+      - run:
+          name: run cowbull webapp
+          command: |
+            docker run --name test2 \
+              --link cowbull \
+              -v /tmp:/tmp \
+              -e COWBULL_SERVER='cowbull' \
+              -e COWBULL_PORT=8080 \
+              -e LOGGING_LEVEL=10 \
+              -e COWBULL_ENVIRONMENT="CI/CD" \
+              -e BUILD_NUMBER="TEST-"$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM \
+              -p 8080:8080 \
+              -d dsanderscan/$IMAGE_NAME:$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM
 
       - run:
           name: run unit tests
           command: |
-            docker exec -t cowbull_webapp \
+            docker exec -t test2 \
               bash -c "python -m unittest -v tests 2> >(tee -a /tmp/unittest-report.log >&2)"
             docker cp test2:/tmp/unittest-report.log /tmp/unittest-report.log
             echo "Test results status: $?"
