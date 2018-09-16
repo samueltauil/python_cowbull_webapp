@@ -29,6 +29,7 @@ jobs:
             COWBULL_ENVIRONMENT: "CircleCI"
           command: |
             set -o pipefail
+            echo "Testing ${BUILD_NUMBER}"
             docker-compose -f vendor/docker/docker-compose.yml up -d
 
       - run:
