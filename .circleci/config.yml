@@ -25,11 +25,11 @@ jobs:
       - run:
           name: Docker up
           environment:
-            BUILD_NUMBER: $MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM
             COWBULL_ENVIRONMENT: "CircleCI"
           command: |
             set -o pipefail
             export BUILD_NUMBER=$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM
+            export doclog=${doclog}
             echo "Testing ${BUILD_NUMBER}"
             docker-compose -f vendor/docker/docker-compose.yml up -d
 
@@ -49,9 +49,9 @@ jobs:
       - deploy:
           name: Push docker image
           command: |
-            docker tag dsanderscan/$IMAGE_NAME:$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM dsanderscan/$IMAGE_NAME:latest
-            docker push dsanderscan/$IMAGE_NAME:$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM
-            docker push dsanderscan/$IMAGE_NAME:latest
+            docker tag $doclog/$IMAGE_NAME:$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM dsanderscan/$IMAGE_NAME:latest
+            docker push $doclog/$IMAGE_NAME:$MAJOR_VERSION"."$MINOR_VERSION"."$CIRCLE_BUILD_NUM
+            docker push $doclog/$IMAGE_NAME:latest
 
       - save_cache:
           key: v2-dependencies-{{ checksum "requirements.txt" }}

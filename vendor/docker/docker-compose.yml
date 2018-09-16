@@ -7,7 +7,7 @@ services:
       - cowbull_network
     restart: always
   cowbull_svc:
-    image: 'dsanderscan/cowbull'
+    image: '$doclog/cowbull'
     depends_on:
       - redis
     environment:
