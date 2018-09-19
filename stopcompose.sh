@@ -6,5 +6,5 @@ export BUILD_NUMBER="COMPOSE"; \
   export app_srv_version="1.0.172"; \
   export doclog=dsanderscan; \
   docker-compose \
-    -f vendor/docker/docker-compose.yml \
+    -f vendor/docker/docker-compose-local.yml \
     down
