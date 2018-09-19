@@ -29,7 +29,7 @@ services:
       - COWBULL_PORT=8080
       - COWBULL_VERSION=v1
       - BUILD_NUMBER=--LOCAL--
-      - COWBULL_ENVIRONMENT=--COMPOSE--
+      - COWBULL_ENVIRONMENT=1.0.172-COMPOSE
     networks:
       - cowbull_network
 networks:
