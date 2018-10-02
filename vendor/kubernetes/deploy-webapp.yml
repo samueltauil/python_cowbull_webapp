@@ -11,7 +11,8 @@ spec:
     app: webapp
     tier: webappFrontend
   ports:
-    - protocol: TCP
+    - name: 8080-tcp
+      protocol: TCP
       targetPort: 8080
       port: 8080
   type: LoadBalancer
